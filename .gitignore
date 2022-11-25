@@ -1,0 +1,6 @@
+results/
+inputs/
+dev/
+src/__pycache__/
+*/*.nc
+
