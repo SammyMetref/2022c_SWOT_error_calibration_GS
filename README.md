@@ -76,9 +76,9 @@ and can be downloaded using:
 ## Leaderboard
 | Method   | Field                          |   µ(RMSE) |    λ(SNR1) [km] | Reference                  |
 |:---------|--------:|-----------------:|-------------------------------:|:---------------------------|
-| Baseline   | Sea Surface Height [m]|        0.930 |         34.7  |  [demo_baseline.ipynb](https://github.com/ocean-data-challenges/2022a_SWOT_error_calibration_GS/blob/main/notebook/demo_baseline.ipynb) |  
-| ---   | Geostrophic current [m.s$^-1$]|        0.479 |         30.7  |  [demo_baseline.ipynb](https://github.com/ocean-data-challenges/2022a_SWOT_error_calibration_GS/blob/main/notebook/demo_baseline.ipynb) |  
-| ---   | Relative vorticity []|        0.624 |         37.4  |  [demo_baseline.ipynb](https://github.com/ocean-data-challenges/2022a_SWOT_error_calibration_GS/blob/main/notebook/demo_baseline.ipynb) | 
+| Baseline   | Sea Surface Height [m]|        0.930 |         34.7  |  [demo_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_baseline.ipynb) |  
+| ---   | Geostrophic current [m.s$^-1$]|        0.479 |         30.7  |  [demo_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_baseline.ipynb) |  
+| ---   | Relative vorticity []|        0.624 |         37.4  |  [demo_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_baseline.ipynb) | 
 
 with:
 
