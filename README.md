@@ -32,7 +32,7 @@ In no way the targets that are available during the evaluation period should be 
 
 
 <img src="figures/DC_SWOT_error_calibration_GS-illustration.png" /> 
-<center><em>Fig.: Example of one target of the data challenge: SWOT data without errors (left), one input of the data challenge: SWOT data with error (center) and the difference between the two (right). Here, SWOT is "flying" over the NATL60 model simulation in the Gulf Stream region.
+<center><em>Fig.: Example of one target of the data challenge: SWOT data without errors (left), one input of the data challenge: SWOT data with errors (center) and the difference between the two (right). Here, SWOT is "flying" over the NATL60 model simulation in the Gulf Stream region.
 </em></center>
 
 
@@ -59,7 +59,7 @@ To start out download the dataset from the temporary data server, use:
 
 ```
 and then uncompress the files using `tar -xvf <file>.tar.gz`. You may also use `ftp`, `rsync` or `curl`to donwload the data.
-**The inputs are stored in the variable *ssh_with_error* and the targets are stored in the variable *ssh_without_error.**
+**The inputs are stored in the variable *ssh_err* and the targets are stored in the variable *ssh_true.**
 
 ### Extra training data
 
@@ -76,13 +76,17 @@ and can be downloaded using:
 ## Leaderboard
 | Method   | Field                          |   µ(RMSE) |    λ(SNR1) [km] | Reference                  |
 |:---------|--------:|-----------------:|-------------------------------:|:---------------------------|
-| NO FILTER   | Sea Surface Height [m]|        0.0 |         00  |  [demo_baseline.ipynb](https://github.com/ocean-data-challenges/2022a_SWOT_error_calibration_GS/blob/main/notebook/demo_baseline.ipynb) | 
+| Baseline   | Sea Surface Height [m]|        0.930 |         34.7  |  [demo_baseline.ipynb](https://github.com/ocean-data-challenges/2022a_SWOT_error_calibration_GS/blob/main/notebook/demo_baseline.ipynb) | 
+|:---------|--------:|-----------------:|-------------------------------:|:---------------------------|
+| Baseline   | Geostrophic current [m.s$^-1$]|        0.479 |         30.7  |  [demo_baseline.ipynb](https://github.com/ocean-data-challenges/2022a_SWOT_error_calibration_GS/blob/main/notebook/demo_baseline.ipynb) | 
+|:---------|--------:|-----------------:|-------------------------------:|:---------------------------|
+| Baseline   | Relative vorticity []|        0.624 |         37.4  |  [demo_baseline.ipynb](https://github.com/ocean-data-challenges/2022a_SWOT_error_calibration_GS/blob/main/notebook/demo_baseline.ipynb) | 
 
 with:
 
- `µ(RMSE)`: averaged root-mean square error over the domain 
+ `µ(RMSE)`: averaged root-mean square error over the swaths 
  
- `λ(SNR1)`: spatial wavelength where SNR=1
+ `λ(SNR1)`: spatial wavelength where SNR=1 along-track for every across-tracks.
 
 
 
