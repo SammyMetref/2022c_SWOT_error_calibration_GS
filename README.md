@@ -47,8 +47,8 @@ The data needed for the DC are presented with the following directory structure:
 
 ```
 .
-|-- dc_inputs
-|   |-- input_ssh_karin_013_*.nc
+|-- dc_input-output
+|   |-- dc_input-output_SWOTcalib_GS.nc
 
 ```
 
@@ -56,7 +56,7 @@ The data needed for the DC are presented with the following directory structure:
 To start out download the dataset from the temporary data server, use:
 
 ```shell
-!wget https://ige-meom-opendap.univ-grenoble-alpes.fr/thredds/fileServer/meomopendap/extract/ocean-data-challenges/2022a_SWOT_error_calibration_GS/dc_inputs.tar.gz
+!wget https://ige-meom-opendap.univ-grenoble-alpes.fr/thredds/fileServer/meomopendap/extract/ocean-data-challenges/2022c_SWOT_error_calibration_GS/dc_input-output/dc_input-output_SWOTcalib_GS.nc
 
 ```
 and then uncompress the files using `tar -xvf <file>.tar.gz`. You may also use `ftp`, `rsync` or `curl`to donwload the data.

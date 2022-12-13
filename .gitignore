@@ -3,4 +3,7 @@ inputs/
 dev/
 src/__pycache__/
 */*.nc
+notebook/.ipynb_checkpoints/
+docs/.ipynb_checkpoints/
+.ipynb_checkpoints/
 

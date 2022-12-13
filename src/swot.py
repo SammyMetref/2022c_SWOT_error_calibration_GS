@@ -48,7 +48,7 @@ class SwotTrack(object):
         dx = 2000 # m
         dy = 2000 # m
         gravity = 9.81
-        f_coriolis = coriolis_parameter(ds.latitude.values)
+        f_coriolis = coriolis_parameter(ds.lat.values)
         ref_gx, ref_gy = gravity/f_coriolis*np.gradient(ds[invar], dx, edge_order=2)
         geos_current = np.sqrt(ref_gx**2 + ref_gy**2)
         
@@ -425,6 +425,76 @@ class SwotTrack(object):
         self.__enrich_dataset(outvar, sshaf)
 
 
+        
+    def apply_ac_track_slope_calib(self, invar, outvar):
+        """ apply median filter, enrich dataset inplace """
+        self.__check_var_exist(invar)
+        if outvar in self._dset.data_vars:
+            self._dset = self._dset.drop(outvar)
+        ssha = self.dset[invar].values
+        ssha_calib = np.zeros_like(ssha)+np.nan  
+        
+        ssha = np.ma.masked_invalid(ssha) 
+        a,b = np.polyfit(np.arange(int(-np.shape(ssha)[1]/2),int(np.shape(ssha)[1]/2)+1), np.mean(ssha,0), 1)
+        ssha_calib = ssha - np.tile((a*np.arange(int(-np.shape(ssha)[1]/2),int(np.shape(ssha)[1]/2)+1)),(np.shape(ssha)[0],1))
+         
+        self.__enrich_dataset(outvar, ssha_calib)
+        
+        
+        
+    def apply_ac_track_slope_calib1(self, invar, outvar):
+        """ apply median filter, enrich dataset inplace """
+        self.__check_var_exist(invar)
+        if outvar in self._dset.data_vars:
+            self._dset = self._dset.drop(outvar)
+        ssha = self.dset[invar].values
+        ssha_calib = np.zeros_like(ssha)+np.nan 
+        ssha0 = ssha[:,:25]
+        ssha1 = ssha[:,36:]
+        
+        nc_half=int(np.shape(ssha0)[1])
+        ssha_half = ssha0[:,:]
+        ssh_half_mean = np.mean(ssha_half,0)
+        a,b = np.polyfit(range(nc_half), ssh_half_mean, 1)
+        ssha_half1_calib = ssha_half - np.tile((a*np.arange(nc_half)+b),(np.shape(ssha_half)[0],1))
+        
+        nc_half=int(np.shape(ssha1)[1])
+        ssha_half = ssha1[:,:]
+        ssh_half_mean = np.mean(ssha_half,0)
+        a,b = np.polyfit(range(nc_half), ssh_half_mean, 1) 
+        ssha_half2_calib = ssha_half - np.tile((a*np.arange(nc_half)+b),(np.shape(ssha_half)[0],1))
+         
+        #ssha_calib = np.concatenate((ssha_half1_calib, ssha_half2_calib), axis=1)
+        ssha_calib[:,:25] = ssha_half1_calib
+        ssha_calib[:,36:] = ssha_half2_calib
+        self.__enrich_dataset(outvar, ssha_calib)
+        
+        
+        
+    def apply_ac_track_slope_calib2(self, invar, outvar):
+        """ apply median filter, enrich dataset inplace """
+        self.__check_var_exist(invar)
+        if outvar in self._dset.data_vars:
+            self._dset = self._dset.drop(outvar)
+        ssha = self.dset[invar].values
+        
+        nc_half=int(np.shape(ssha)[1]/2)
+        ssha_half = ssha[:,:nc_half] 
+        ssha_half1_calib = np.zeros_like(ssha_half)
+        for i in range(np.shape(ssha)[0]):
+            ssh_half_mean = ssha_half[i,:]
+            a,b = np.polyfit(range(nc_half), ssh_half_mean, 1)
+            ssha_half1_calib[i,:] = ssha_half[i,:] - (a*np.arange(nc_half)+b), 
+        
+        ssha_half = ssha[:,nc_half:]
+        ssha_half2_calib = np.zeros_like(ssha_half)
+        for i in range(np.shape(ssha)[0]):
+            ssh_half_mean = ssha_half[i,:]
+            a,b = np.polyfit(range(nc_half), ssh_half_mean, 1) 
+            ssha_half2_calib[i,:] = ssha_half[i,:] - (a*np.arange(nc_half)+b) 
+         
+        ssha_calib = np.concatenate((ssha_half1_calib, ssha_half2_calib), axis=1)
+        self.__enrich_dataset(outvar, ssha_calib)
 
         
     def to_netcdf(self, l_variables, fname):
