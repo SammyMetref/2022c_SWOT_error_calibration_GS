@@ -25,7 +25,7 @@ This data challenge is partly funded by the CNRS, by the CNES and, as part of th
 
 ### Experimental setup
 
-The data challenge is in the form of an Observing System Simulation Experiment (OSSE) considering a realistic ocean model simulation, the NEMO high resolution North Atlantic simulation **NATL60**, as the true ocean state in a 10°X10° degree box in the Gulf Stream region. The SWOT simulator (Gauthier et al., 2016) was then used to create realistic SWOT data with and without instrumental noise. 
+The data challenge is in the form of an Observing System Simulation Experiment (OSSE) considering a realistic ocean model simulation, the NEMO high resolution North Atlantic simulation **NATL60**, as the true ocean state in a 10°X10° degree box in the Gulf Stream region. The SWOT simulator ([Gauthier et al., 2016](https://journals.ametsoc.org/view/journals/atot/33/1/jtech-d-15-0160_1.xml?tab_body=fulltext-display)) was then used to create realistic SWOT data with and without instrumental noise. 
 
 The experiment is performed over one SWOT orbital cycle (cycle 13) which contains 270 passes. All other cycles are available to tune or train the filters.
 
@@ -39,6 +39,7 @@ In no way the targets that are available during the evaluation period should be 
 
 ### Baseline 
 
+The baseline method is a very simple and straightforward method that removes the averaged on the pass of a linear trend across track. This is supposed to remove all the signal that has the same structure as the roll error (if the roll error was constant over the region). This method is flowed since (1) there are other errors, (2) the roll error is not constant over the region and (3) the method also removes SSH signals that happens to have a linear structure across track. The baseline is performed in the notebook [demo_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_baseline.ipynb).
 
 
 ### Evaluation
