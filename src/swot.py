@@ -4,9 +4,7 @@ import sys
 import pyinterp
 import pyinterp.fill
 import matplotlib.pylab as plt
-sys.path.append('..') 
-from src.filters_bidim import median_filter, lanczos_filter, loess_filter, gaussian_filter, boxcar_filter, lee_filter
-from src.gomez import VariationnalFilter
+sys.path.append('..')  
 
 class SwotTrack(object):
 
@@ -347,87 +345,18 @@ class SwotTrack(object):
         return (fig_ssh_true + fig_noisy_ssh + fig_filtered_ssh + fig_delta_ssh_filtered_ssh_true).cols(2)
 
         
-    def apply_your_own_filter(self,thefilter,invar,outvar,**kwargs):
-        """ apply median filter, enrich dataset inplace """
+    def apply_your_own_calib(self,thecalib,invar,outvar,**kwargs):
+        """ apply your own calib, enrich dataset inplace """
         self.__check_var_exist(invar)
         if outvar in self._dset.data_vars:
             self._dset = self._dset.drop(outvar)
         ssha = self.dset[invar].values
-        ssha_f = thefilter(ssha, **kwargs)
+        ssha_f = thecalib(ssha, **kwargs)
         self.__enrich_dataset(outvar, ssha_f)
-
-        
-    def apply_median_filter(self, invar, size, outvar):
-        """ apply median filter, enrich dataset inplace """
-        self.__check_var_exist(invar)
-        if outvar in self._dset.data_vars:
-            self._dset = self._dset.drop(outvar)
-        ssha = self.dset[invar].values
-        ssha_f = median_filter(ssha, size=size)
-        self.__enrich_dataset(outvar, ssha_f)
-
-    def apply_gaussian_filter(self, invar, sigma, outvar):
-        """ apply gaussian filter """
-        self.__check_var_exist(invar)
-        if outvar in self.dset.data_vars:
-            self._dset = self._dset.drop(outvar)
-        ssha = self.dset[invar].values
-        ssha_f = gaussian_filter(ssha, sigma)
-        self.__enrich_dataset(outvar, ssha_f)
-
-    def apply_boxcar_filter(self, invar, size, outvar):
-        """ apply boxcar filter """
-        self.__check_var_exist(invar)
-        if outvar in self.dset.data_vars:
-            self._dset = self._dset.drop(outvar)
-        ssha = self.dset[invar].values
-        ssha_f = boxcar_filter(ssha, size)
-        self.__enrich_dataset(outvar, ssha_f)
-
-    def apply_lanczos_filter(self, invar, lx, outvar, width_factor=3):
-        """ apply a lanczos filter """
-        self.__check_var_exist(invar)
-        if outvar in self._dset.data_vars:
-            self._dset = self._dset.drop(outvar)
-        ssha = self.dset[invar].values
-        ssha_f = lanczos_filter(ssha, lx, width_factor=width_factor)
-        self.__enrich_dataset(outvar, ssha_f)
-
-    def apply_loess_filter(self, invar, outvar, deg=1, l=1, kernel='gaussian'):
-        """ apply a loess filter """
-        self.__check_var_exist(invar)
-        if outvar in self._dset.data_vars:
-            self._dset = self._dset.drop(outvar)
-        ssha = self.dset[invar].values
-        ssha_f = loess_filter(ssha, deg, l, kernel)
-        self.__enrich_dataset(outvar, ssha_f)
-        
-    def apply_lee_filter(self, invar, lx, outvar):
-        ''' apply filter from lee et al., 1980 '''
-        self.__check_var_exist(invar)
-        if outvar in self.dset.data_vars:
-            self._dset = self._dset.drop(outvar)
-        ssha = self.dset[invar].values
-        sshaf = lee_filter(ssha, lx)
-        self.__enrich_dataset(outvar, sshaf)
-
-    def apply_var_filter(self, invar, outvar, **kwargs):
-        ''' apply the Gomez et al. filter '''
-        self.__check_var_exist(invar)
-        if outvar in self.dset.data_vars:
-            self._dset = self._dset.drop(outvar)
-        ssha = self.dset[invar].values
-        vf = VariationnalFilter(self.longitude,
-                                self.latitude,
-                                ssha,
-                                self.nadir_mask)
-        sshaf = vf.filter(**kwargs)
-        self.__enrich_dataset(outvar, sshaf)
-
-
+ 
         
     def apply_ac_track_slope_calib(self, invar, outvar):
-        """ apply median filter, enrich dataset inplace """
+        """ apply ac track slope calibration, enrich dataset inplace """
         self.__check_var_exist(invar)
         if outvar in self._dset.data_vars:
             self._dset = self._dset.drop(outvar)
@@ -443,7 +372,7 @@ class SwotTrack(object):
         
         
     def apply_ac_track_slope_calib1(self, invar, outvar):
-        """ apply median filter, enrich dataset inplace """
+        """ apply ac track slope calibration v1, enrich dataset inplace """
         self.__check_var_exist(invar)
         if outvar in self._dset.data_vars:
             self._dset = self._dset.drop(outvar)
@@ -472,7 +401,7 @@ class SwotTrack(object):
         
         
     def apply_ac_track_slope_calib2(self, invar, outvar):
-        """ apply median filter, enrich dataset inplace """
+        """ apply ac track slope calibration v2, enrich dataset inplace """
         self.__check_var_exist(invar)
         if outvar in self._dset.data_vars:
             self._dset = self._dset.drop(outvar)
