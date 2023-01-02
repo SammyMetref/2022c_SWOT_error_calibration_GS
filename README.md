@@ -54,7 +54,7 @@ The evaluation of the calibration methods is based on the comparison of the SWOT
 
 Clone the data challenge repo: 
 ```
-git clone https://github.com/ocean-data-challenges/2022a_SWOT_error_calibration_GS.git
+git clone https://github.com/ocean-data-challenges/2022c_SWOT_error_calibration_GS.git
 ```
 create the data challenge conda environment, named env-dc-swot-filtering, by running the following command:
 ```
@@ -77,7 +77,7 @@ You're now good to go !
 
 ### Download the data
 
-The data are hosted on the opendap: [ocean-data-challenges/2022a_SWOT_error_calibration_GS/](https://ige-meom-opendap.univ-grenoble-alpes.fr/thredds/catalog/meomopendap/extract/ocean-data-challenges/2022a_SWOT_error_calibration_GS/catalog.html). 
+The data are hosted on the opendap: [ocean-data-challenges/2022c_SWOT_error_calibration_GS/](https://ige-meom-opendap.univ-grenoble-alpes.fr/thredds/catalog/meomopendap/extract/ocean-data-challenges/2022c_SWOT_error_calibration_GS/catalog.html). 
 
 #### Inputs and targets data
 

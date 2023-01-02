@@ -281,47 +281,56 @@ class SwotTrack(object):
     
         
         
-    def plot_track(self,filtered_var_name,swottrack_input):
+    def plot_track(self,calib_var_name,swottrack_input):
         
         ds = self._dset
         ds0 = swottrack_input._dset 
         
-        vmin = np.nanpercentile(ds0['ssh_karin'], 5)
-        vmax = np.nanpercentile(ds0['ssh_karin'], 95)
+        vmin = np.nanpercentile(ds0['ssh_true'], 5)
+        vmax = np.nanpercentile(ds0['ssh_true'], 95)
          
         
         fig = plt.figure(figsize=(18,12))
         ax1 = fig.add_subplot(2,3,1)        
-        plt.scatter(ds0.longitude,ds0.latitude,c=ds0['ssh_true'].values, vmin= vmin, vmax= vmax, cmap='Spectral_r')
+        plt.scatter(ds0.lon,ds0.lat,c=ds0['ssh_true'].values, vmin= vmin, vmax= vmax, cmap='Spectral_r')
         plt.colorbar()
         ax1.title.set_text('True ssh')
                    
-        ax2 = fig.add_subplot(2,3,2)        
-        plt.scatter(ds0.longitude,ds0.latitude,c=ds0['ssh_karin'].values, vmin= vmin, vmax= vmax, cmap='Spectral_r')
-        plt.colorbar()
-        ax2.title.set_text('Noisy ssh karin')
+        vmin = np.nanpercentile(ds0['ssh_err'], 5)
+        vmax = np.nanpercentile(ds0['ssh_err'], 95)
                    
-        ax3 = fig.add_subplot(2,3,3)        
-        plt.scatter(ds.longitude,ds.latitude,c=ds[filtered_var_name].values, vmin= vmin, vmax= vmax, cmap='Spectral_r')
+        ax2 = fig.add_subplot(2,3,2)        
+        plt.scatter(ds0.lon,ds0.lat,c=ds0['ssh_err'].values, vmin= vmin, vmax= vmax, cmap='Spectral_r')
         plt.colorbar()
-        ax3.title.set_text('Filtered ssh karin')
-         
-    
-        delta0 = ds0['ssh_karin'] - ds0['ssh_true']
-        delta = ds[filtered_var_name] - ds0['ssh_true']
+        ax2.title.set_text('SSH with errors')
         
-        vmin_delta = np.nanpercentile(delta.values, 5)
-        vmax_delta = np.nanpercentile(delta.values, 95)
+        vmin = np.nanpercentile(ds0['ssh_true'], 5)
+        vmax = np.nanpercentile(ds0['ssh_true'], 95)
+        
+        ax3 = fig.add_subplot(2,3,3)        
+        plt.scatter(ds.lon,ds.lat,c=ds[calib_var_name].values, vmin= vmin, vmax= vmax, cmap='Spectral_r')
+        plt.colorbar()
+        ax3.title.set_text('Calib SSH')
+         
+     
+        delta0 = ds0['ssh_err'].values - ds0['ssh_true'].values
+        delta = ds[calib_var_name].values - ds0['ssh_true'].values
+        
+        vmin_delta = np.nanpercentile(delta0, 5)
+        vmax_delta = np.nanpercentile(delta0, 95)
                    
         ax5 = fig.add_subplot(2,3,5)        
-        plt.scatter(ds0.longitude,ds0.latitude,c=delta0, vmin= vmin_delta, vmax= vmax_delta, cmap='bwr')
+        plt.scatter(ds0.lon,ds0.lat,c=delta0, vmin= vmin_delta, vmax= vmax_delta, cmap='bwr')
         plt.colorbar()
-        ax5.title.set_text('Karin noise')
+        ax5.title.set_text('Errors')
                    
+        vmin_delta = np.nanpercentile(delta, 5)
+        vmax_delta = np.nanpercentile(delta, 95)
+        
         ax6 = fig.add_subplot(2,3,6)        
-        plt.scatter(ds.longitude,ds.latitude,c=delta, vmin= vmin_delta, vmax= vmax_delta, cmap='bwr')
+        plt.scatter(ds.lon,ds.lat,c=delta, vmin= vmin_delta, vmax= vmax_delta, cmap='bwr')
         plt.colorbar()
-        ax6.title.set_text('Filtered ssh karin - True ssh karin')
+        ax6.title.set_text('Calib SSH - True SSH')
                    
                    
         plt.show()
@@ -368,6 +377,25 @@ class SwotTrack(object):
         ssha_calib = ssha - np.tile((a*np.arange(int(-np.shape(ssha)[1]/2),int(np.shape(ssha)[1]/2)+1)),(np.shape(ssha)[0],1))
          
         self.__enrich_dataset(outvar, ssha_calib)
+        
+        
+    def apply_detrending_calib(self, invar, outvar):
+        """ apply ac track slope calibration, enrich dataset inplace """
+        self.__check_var_exist(invar)
+        if outvar in self._dset.data_vars:
+            self._dset = self._dset.drop(outvar)
+        ssha = self.dset[invar].values
+        ssha_calib = np.zeros_like(ssha)+np.nan  
+
+        # Import detrending functions
+        sys.path.append('/Users/sammymetref/Documents/DATLAS/Notebooks/Experiments_Detrending/') 
+        from function_detrending import obs_detrendswot 
+
+        n_gap = 10
+
+        ssha_detrend, aa1,bb1,cc1,ee11,ee12,ff11,ff12 = obs_detrendswot(ssha, n_gap, removealpha0=True,boxsize = 100000)
+
+        self.__enrich_dataset(outvar, ssha_detrend)
         
         
         
