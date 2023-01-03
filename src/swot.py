@@ -43,6 +43,7 @@ class SwotTrack(object):
         
         ds = self._dset
         
+        
         dx = 2000 # m
         dy = 2000 # m
         gravity = 9.81
@@ -51,11 +52,11 @@ class SwotTrack(object):
         geos_current = np.sqrt(ref_gx**2 + ref_gy**2)
         
         self.fc = f_coriolis
-        
+         
         self.__enrich_dataset(outvar, geos_current)
         self.__enrich_dataset(outvar + '_y', ref_gx)
-        self.__enrich_dataset(outvar + '_x', -ref_gy)
-        
+        self.__enrich_dataset(outvar + '_x', -ref_gy) 
+         
         
     def compute_relative_vorticity(self, invar_x, invar_y, outvar):
         
@@ -75,9 +76,9 @@ class SwotTrack(object):
     def display_demo_target(self):
         
         ds = self._dset
-        ds = ds.isel(num_lines=slice(2400, 3000), drop=True)
-        ds['num_lines'] = 2*(ds['num_lines']-ds['num_lines'][0])
-        ds['num_pixels'] = 2*ds['num_pixels']
+        #ds = ds.isel(num_lines=slice(2400, 3000), drop=True)
+        ds['time'] = 2*(ds['x_al']-ds['x_al'][0])
+        ds['nC'] = 2*ds['nC']
         
         msk = ds.simulated_noise_ssh_karin/ds.simulated_noise_ssh_karin
         vmin = np.nanpercentile(ds['simulated_true_ssh_karin'], 5)
@@ -118,9 +119,9 @@ class SwotTrack(object):
     def display_demo(self, var_name='karin',msk=None, vmin=None, vmax=None):
         
         ds = self._dset
-        ds = ds.isel(num_lines=slice(2400, 3000), drop=True)
-        ds['num_lines'] = 2*(ds['num_lines']-ds['num_lines'][0])
-        ds['num_pixels'] = 2*ds['num_pixels']
+        #ds = ds.isel(num_lines=slice(2400, 3000), drop=True)
+        ds['time'] = 2*(ds['x_al']-ds['x_al'][0])
+        ds['nC'] = 2*ds['nC']
         
         if msk is None:
             msk = ds['ssh_'+var_name]/ds['ssh_'+var_name]
@@ -165,10 +166,9 @@ class SwotTrack(object):
     
     def display_demo_input(self):
         
-        ds = self._dset
-        ds = ds.isel(num_lines=slice(2400, 3000), drop=True)
-        ds['num_lines'] = 2*(ds['num_lines']-ds['num_lines'][0])
-        ds['num_pixels'] = 2*ds['num_pixels']
+        ds = self._dset 
+        ds['time'] = 2*(ds['x_al']-ds['x_al'][0])
+        ds['nC'] = 2*ds['nC']
         
         msk = ds.simulated_noise_ssh_karin/ds.simulated_noise_ssh_karin
         vmin = np.nanpercentile(ds['simulated_true_ssh_karin'], 5)
@@ -208,10 +208,9 @@ class SwotTrack(object):
         
     def display_result_quickstart(self):
         
-        ds = self._dset
-        ds = ds.isel(num_lines=slice(2400, 3000), drop=True)
-        ds['num_lines'] = 2*(ds['num_lines']-ds['num_lines'][0])
-        ds['num_pixels'] = 2*ds['num_pixels']
+        ds = self._dset 
+        ds['time'] = 2*(ds['x_al']-ds['x_al'][0])
+        ds['nC'] = 2*ds['nC']
         
         msk = ds.simulated_noise_ssh_karin/ds.simulated_noise_ssh_karin
         vmin = np.nanpercentile(ds['simulated_true_ssh_karin'], 5)
@@ -481,7 +480,7 @@ class SwotTrack(object):
 
     def __enrich_dataset(self, varname: str,  array) -> None:
         """ add a new variable to the dataset """
-        self._dset = self._dset.assign(dict(temp=(('num_lines', 'num_pixels'), array)))
+        self._dset = self._dset.assign(dict(temp=(('time', 'nC'), array)))
         self._dset = self._dset.rename_vars({'temp': varname})
 
     def fill_nadir_gap(self, invar):
