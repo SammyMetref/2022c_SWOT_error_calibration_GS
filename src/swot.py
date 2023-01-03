@@ -117,8 +117,8 @@ class SwotTrack(object):
         
 
     def display_demo(self, var_name='karin',msk=None, vmin=None, vmax=None):
-        
-        ds = self._dset
+        import copy
+        ds = copy.deepcopy(self._dset)
         #ds = ds.isel(num_lines=slice(2400, 3000), drop=True)
         ds['time'] = 2*(ds['x_al']-ds['x_al'][0])
         ds['nC'] = 2*ds['nC']
