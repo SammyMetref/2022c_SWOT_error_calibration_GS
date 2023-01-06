@@ -329,9 +329,9 @@ def plot_demo_pass(file_ref_input, file_calib):
     swt_calib = SwotTrack(file_calib)
     swt_calib.compute_geos_current('ssh_err_calib', 'calib_geos_current')
     swt_calib.compute_relative_vorticity('calib_geos_current_x', 'calib_geos_current_y', 'calib_ksi')
-    
-    
-    n_p, n_l = np.meshgrid(swt_input._dset.num_pixels.values,swt_input._dset.num_lines.values)
+     
+    x_al0 = 2*(swt_input._dset.x_al-swt_input._dset.x_al[0]) 
+    n_p, n_l = np.meshgrid(swt_input._dset.nC.values,x_al0)
     
     fig, axs = plt.subplots(2, 3,figsize=(10,16))
     row,col = 0,0

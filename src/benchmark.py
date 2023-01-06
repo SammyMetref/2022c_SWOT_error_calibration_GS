@@ -63,6 +63,10 @@ class Benchmark(object):
             etuvar: calibrated SSH variable name
         """
 
+        self.mean_ssh_rmse = 0
+        self.mean_ug_rmse = 0
+        self.mean_ksi_rmse = 0
+        
         for i, fname in enumerate(l_files):
             
             # Calibrated field
@@ -85,7 +89,7 @@ class Benchmark(object):
             )
             ssh_rmse = ((swt._dset[etuvar].values - swt_input._dset['ssh_true'].values)**2).flatten()
             ssh_rmse = ssh_rmse[~np.isnan(ssh_rmse)]
-            self.mean_ssh_rmse = np.mean(ssh_rmse)
+            self.mean_ssh_rmse += np.sqrt(np.mean(ssh_rmse))
             
             # GEOST CURRENT RMSE
             self.stats_dict['ug_rmse'].push(
@@ -96,7 +100,7 @@ class Benchmark(object):
             )
             ug_rmse = ((swt._dset['calib_geos_current'].values - swt_input._dset['true_geos_current'].values)**2).flatten()
             ug_rmse = ug_rmse[~np.isnan(ug_rmse)] 
-            self.mean_ug_rmse = np.mean(ug_rmse)
+            self.mean_ug_rmse += np.sqrt(np.mean(ug_rmse))
             
             # VORTICITY RMSE
             self.stats_dict['ksi_rmse'].push(
@@ -107,7 +111,11 @@ class Benchmark(object):
             )
             ksi_rmse = ((swt._dset['calib_ksi'].values - swt_input._dset['true_ksi'].values)**2).flatten()
             ksi_rmse = ksi_rmse[~np.isnan(ksi_rmse)] 
-            self.mean_ksi_rmse = np.mean(ksi_rmse)
+            self.mean_ksi_rmse += np.sqrt(np.mean(ksi_rmse))
+            
+        self.mean_ssh_rmse = self.mean_ssh_rmse/np.size(l_files)
+        self.mean_ug_rmse = self.mean_ug_rmse/np.size(l_files)
+        self.mean_ksi_rmse = self.mean_ksi_rmse/np.size(l_files)
             
     def _compute_grad_diff(self, etu, ref, f_coriolis):
         """ compute differences of gradients """
@@ -177,6 +185,7 @@ class Benchmark(object):
         plt.title('RMSE SSH field', fontweight='bold')
         ax.add_feature(cfeature.LAND, zorder=2)
         ax.coastlines(zorder=2)
+        print('SSH:',np.mean(ds.ssh_rmse))
 
         ax = plt.subplot(312, projection=ccrs.PlateCarree())
         vmin = np.nanpercentile(ds.ug_rmse, 5)
@@ -185,6 +194,7 @@ class Benchmark(object):
         plt.title('RMSE GEOSTROPHIC CURRENT field', fontweight='bold')
         ax.add_feature(cfeature.LAND, zorder=2)
         ax.coastlines(zorder=2)
+        print('Ug:',np.mean(ds.ug_rmse))
         
         ax = plt.subplot(313, projection=ccrs.PlateCarree())
         vmin = np.nanpercentile(ds.ksi_rmse, 5)
@@ -193,6 +203,7 @@ class Benchmark(object):
         plt.title('RMSE RELATIVE VORTICITY field', fontweight='bold')
         ax.add_feature(cfeature.LAND, zorder=2)
         ax.coastlines(zorder=2)
+        print('Ksi:',np.mean(ds.ksi_rmse))
 
         plt.show()
         
@@ -414,7 +425,7 @@ class Benchmark(object):
         plt.legend(bbox_to_anchor=(1.02, 0.5, 1, 0.2), loc="upper left", ncol=2)
           
     
-    def compute_along_track_psd(self, l_files, etuvar, l_files_inputs, lengh_scale=512, overlay=0.25, details=False):
+    def compute_along_track_psd(self, l_files, etuvar, l_files_inputs, lengh_scale=512, overlay=0., details=False):
         """ compute along track psd """
             
         
@@ -489,7 +500,7 @@ class Benchmark(object):
 
         
             # parcours des différentes lignes along-track
-            for ac_index in swt._dset.num_pixels.values:
+            for ac_index in swt._dset.nC.values:
 
                 # extraction des lon/lat/ssh
                 lon = swt._dset.lon.values[:,ac_index]

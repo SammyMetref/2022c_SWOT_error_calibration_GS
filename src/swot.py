@@ -4,6 +4,7 @@ import sys
 import pyinterp
 import pyinterp.fill
 import matplotlib.pylab as plt
+from src.aux import *
 sys.path.append('..')  
 
 class SwotTrack(object):
@@ -361,6 +362,24 @@ class SwotTrack(object):
         ssha = self.dset[invar].values
         ssha_f = thecalib(ssha, **kwargs)
         self.__enrich_dataset(outvar, ssha_f)
+        
+        
+       
+    def apply_CERmethod_calib(self, invar, outvar):
+        """ apply CER method calibration, enrich dataset inplace """
+        self.__check_var_exist(invar)
+        if outvar in self._dset.data_vars:
+            self._dset = self._dset.drop(outvar)
+        ssha = self.dset[invar].values
+        ssha_calib = np.zeros_like(ssha)+np.nan  
+
+        Nens=20
+        ensanagap = run_CER_method(self,Nens)
+
+
+        ssha_calib = ensanagap
+
+        self.__enrich_dataset(outvar, ssha_calib)
  
         
     def apply_ac_track_slope_calib(self, invar, outvar):
