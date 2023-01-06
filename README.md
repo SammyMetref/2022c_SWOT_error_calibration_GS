@@ -120,6 +120,7 @@ If necessary a dataset for *training* purposes is available and can be downloade
 | No Calib   | Sea Surface Height [m]|        3.395 |         32.4  |  --- |  
 | ---   | Geostrophic current [m.s$^-1$]|        9.437 |         70.9  |  --- |  
 | ---   | Relative vorticity []|        0.760 |         42.7  |  --- | 
+|:---------|--------:|-----------------:|-------------------------------:|:---------------------------|
 | Baseline   | Sea Surface Height [m]|        0.930 |         34.7  |  [demo_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_baseline.ipynb) |  
 | ---   | Geostrophic current [m.s$^-1$]|        0.479 |         30.7  |  [demo_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_baseline.ipynb) |  
 | ---   | Relative vorticity []|        0.624 |         37.4  |  [demo_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_baseline.ipynb) | 
