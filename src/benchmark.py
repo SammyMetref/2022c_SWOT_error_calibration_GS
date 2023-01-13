@@ -920,17 +920,17 @@ class Benchmark(object):
                  'SSH [m]',
                  self.mean_ssh_nocalib_rmse,  
                  np.round(wavelength_snr1_nocalib, 1),
-                 notebook_name], 
+                 ''], 
                 ['no calib', 
                  'Geostrophic current [m.s$^-1$]',
                  self.mean_ug_nocalib_rmse,  
                  np.round(self.wavelength_snr1_nocalib_ug, 1),
-                 notebook_name],
+                 ''],
                 ['no calib', 
                  'Relative vorticity []',
                  self.mean_ksi_nocalib_rmse,  
                  np.round(self.wavelength_snr1_nocalib_ksi, 1),
-                 notebook_name]
+                 '']
                
                ]
         

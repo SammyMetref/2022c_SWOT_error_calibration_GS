@@ -39,12 +39,12 @@ In no way the targets that are available during the evaluation period should be 
 
 ### Baseline 
 
-The baseline method is a very simple and straightforward method that removes the averaged on the pass of a linear trend across track. This is supposed to remove all the signal that has the same structure as the roll error (if the roll error was constant over the region). This method is flowed since (1) there are other errors, (2) the roll error is not constant over the region and (3) the method also removes SSH signals that happens to have a linear structure across track. The baseline is performed in the notebook [generate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/generate_baseline.ipynb).
+The baseline method is a very simple and straightforward method that removes the averaged on the pass of a linear trend across track. This is supposed to remove all the signal that has the same structure as the roll error (if the roll error was constant over the region). This method is flowed since (1) there are other errors, (2) the roll error is not constant over the region and (3) the method also removes SSH signals that happens to have a linear structure across track. The baseline is performed in the notebook [demo_generate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_generate_baseline.ipynb).
 
 
 ### Evaluation
 
-The evaluation of the calibration methods is based on the comparison of the SWOT calibrated swaths with the error-free SWOT swaths. It includes two scores, one based on the Root-Mean-Square Error (RMSE), the other a noise-to-signal ratio based on Fourier wavenumber spectra. The evaluation notebook [evaluate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/evaluate_baseline.ipynb) implements the computation of these two scores for the baseline as they appear in the leaderboard. 
+The evaluation of the calibration methods is based on the comparison of the SWOT calibrated swaths with the error-free SWOT swaths. It includes two scores, one based on the Root-Mean-Square Error (RMSE), the other a noise-to-signal ratio based on Fourier wavenumber spectra. The evaluation notebook [demo_evaluate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_evaluate_baseline.ipynb) implements the computation of these two scores for the baseline as they appear in the leaderboard. 
 
 
 ## 3. To get started
@@ -117,12 +117,15 @@ If necessary a dataset for *training* purposes is available and can be downloade
 
 | Method   | Field                          |   µ(RMSE) |    λ(SNR1) [km] | Reference                  |
 |:---------|--------:|-----------------:|-------------------------------:|:---------------------------|
-| **No Calib**   | Sea Surface Height [m]|        3.395 |         32.4  |  --- |  
-| ---   | Geostrophic current [m.s$^-1$]|        9.437 |         70.9  |  --- |  
-| ---   | Relative vorticity []|        0.760 |         42.7  |  --- | 
-| **Baseline**   | Sea Surface Height [m]|        0.930 |         34.7  |  [generate_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/generate_baseline.ipynb) |  
-| ---   | Geostrophic current [m.s$^-1$]|        0.479 |         30.7  |  [generate_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/generate_baseline.ipynb) |  
-| ---   | Relative vorticity []|        0.624 |         37.4  |  [generate_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/generate_baseline.ipynb) | 
+| **No Calib**   | Sea Surface Height [m]|        3.395 |         116.3  |  --- |  
+| ---   | Geostrophic current [m.s$^-1$]|        9.437 |         nan  |  --- |  
+| ---   | Relative vorticity []|        0.760 |         37.9  |  --- | 
+| **Baseline**   | Sea Surface Height [m]|        0.145 |         83.9  |  [demo_generate_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_generate_baseline.ipynb) |  
+| ---   | Geostrophic current [m.s$^-1$]|        0.288 |         84.9  |  [demo_generate_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_generate_baseline.ipynb) |  
+| ---   | Relative vorticity []|        0.529 |         36.5  |  [demo_generate_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_generate_baseline.ipynb) | 
+| **CER method**   | Sea Surface Height [m]|        0.074 |         4.2  |  [generate_CERmethod_calibration.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/generate_CERmethod_calibration.ipynb) |  
+| ---   | Geostrophic current [m.s$^-1$]|        0.219 |         78.4  |  [generate_CERmethod_calibration.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/generate_CERmethod_calibration.ipynb) |  
+| ---   | Relative vorticity []|        0.261 |         103.4  |  [generate_CERmethod_calibration.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/generate_CERmethod_calibration.ipynb) | 
 
 with:
 
