@@ -67,6 +67,10 @@ class Benchmark(object):
         self.mean_ug_rmse = 0
         self.mean_ksi_rmse = 0
         
+        self.mean_ssh_nocalib_rmse = 0
+        self.mean_ug_nocalib_rmse = 0
+        self.mean_ksi_nocalib_rmse = 0
+        
         for i, fname in enumerate(l_files):
             
             # Calibrated field
@@ -78,6 +82,8 @@ class Benchmark(object):
             swt_input = SwotTrack(l_files_input[i])#._dset
             swt_input.compute_geos_current('ssh_true', 'true_geos_current')
             swt_input.compute_relative_vorticity('true_geos_current_x', 'true_geos_current_y', 'true_ksi')
+            swt_input.compute_geos_current('ssh_err', 'err_geos_current')
+            swt_input.compute_relative_vorticity('err_geos_current_x', 'err_geos_current_y', 'err_ksi')
             # NEED TO CHEK CONSISTENCY BETWEEN Fileterd and thruth if file not sorted
             
             # SSH RMSE
@@ -90,6 +96,10 @@ class Benchmark(object):
             ssh_rmse = ((swt._dset[etuvar].values - swt_input._dset['ssh_true'].values)**2).flatten()
             ssh_rmse = ssh_rmse[~np.isnan(ssh_rmse)]
             self.mean_ssh_rmse += np.sqrt(np.mean(ssh_rmse))
+             
+            ssh_nocalib_rmse = ((swt_input._dset['ssh_err'].values - swt_input._dset['ssh_true'].values)**2).flatten()
+            ssh_nocalib_rmse = ssh_nocalib_rmse[~np.isnan(ssh_nocalib_rmse)]
+            self.mean_ssh_nocalib_rmse += np.sqrt(np.mean(ssh_nocalib_rmse))
             
             # GEOST CURRENT RMSE
             self.stats_dict['ug_rmse'].push(
@@ -102,6 +112,10 @@ class Benchmark(object):
             ug_rmse = ug_rmse[~np.isnan(ug_rmse)] 
             self.mean_ug_rmse += np.sqrt(np.mean(ug_rmse))
             
+            ug_nocalib_rmse = ((swt_input._dset['err_geos_current'].values - swt_input._dset['true_geos_current'].values)**2).flatten()
+            ug_nocalib_rmse = ug_nocalib_rmse[~np.isnan(ug_nocalib_rmse)] 
+            self.mean_ug_nocalib_rmse += np.sqrt(np.mean(ug_nocalib_rmse))
+            
             # VORTICITY RMSE
             self.stats_dict['ksi_rmse'].push(
                 swt._dset.lon.values.flatten(),
@@ -113,9 +127,16 @@ class Benchmark(object):
             ksi_rmse = ksi_rmse[~np.isnan(ksi_rmse)] 
             self.mean_ksi_rmse += np.sqrt(np.mean(ksi_rmse))
             
+            ksi_nocalib_rmse = ((swt_input._dset['err_ksi'].values - swt_input._dset['true_ksi'].values)**2).flatten()
+            ksi_nocalib_rmse = ksi_nocalib_rmse[~np.isnan(ksi_nocalib_rmse)] 
+            self.mean_ksi_nocalib_rmse += np.sqrt(np.mean(ksi_nocalib_rmse))
+            
         self.mean_ssh_rmse = self.mean_ssh_rmse/np.size(l_files)
         self.mean_ug_rmse = self.mean_ug_rmse/np.size(l_files)
         self.mean_ksi_rmse = self.mean_ksi_rmse/np.size(l_files)
+        self.mean_ssh_nocalib_rmse = self.mean_ssh_nocalib_rmse/np.size(l_files)
+        self.mean_ug_nocalib_rmse = self.mean_ug_nocalib_rmse/np.size(l_files)
+        self.mean_ksi_nocalib_rmse = self.mean_ksi_nocalib_rmse/np.size(l_files)
             
     def _compute_grad_diff(self, etu, ref, f_coriolis):
         """ compute differences of gradients """
@@ -425,7 +446,7 @@ class Benchmark(object):
         plt.legend(bbox_to_anchor=(1.02, 0.5, 1, 0.2), loc="upper left", ncol=2)
           
     
-    def compute_along_track_psd(self, l_files, etuvar, l_files_inputs, lengh_scale=512, overlay=0., details=False):
+    def compute_along_track_psd(self, l_files, etuvar, l_files_inputs, lengh_scale=512, overlay=128., details=False, psd_type='welch'):
         """ compute along track psd """
             
         
@@ -441,8 +462,8 @@ class Benchmark(object):
     
             # parcours des données
             n_obs = len(lon)
-            ii=0
-            while ii+npt < n_obs:
+            ii=0 
+            while ii+npt < n_obs: 
                 seg_ssh_true = ssh_true[ii:ii+npt]
                 seg_ssh_noisy = ssh_noisy[ii:ii+npt]
                 seg_ssh_calib = ssh_calib[ii:ii+npt]
@@ -570,23 +591,77 @@ class Benchmark(object):
         
         # PSD 
         freq, cross_spectrum = signal.csd(l_flat_ssh_noisy,l_flat_ssh_calib, fs=1./resolution, nperseg=npt, noverlap=0)
-        freq, psd_ssh_true  = signal.welch(l_flat_ssh_true, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
-        freq, psd_ssh_noisy = signal.welch(l_flat_ssh_noisy, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
-        freq, psd_ssh_calib = signal.welch(l_flat_ssh_calib, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
-        freq, psd_err = signal.welch(l_flat_ssh_calib - l_flat_ssh_true, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
-        freq, psd_err_err = signal.welch(l_flat_ssh_noisy - l_flat_ssh_true, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
+        if psd_type == 'welch':
+            freq, psd_ssh_true  = signal.welch(l_flat_ssh_true, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
+            freq, psd_ssh_noisy = signal.welch(l_flat_ssh_noisy, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
+            freq, psd_ssh_calib = signal.welch(l_flat_ssh_calib, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
+            freq, psd_err = signal.welch(l_flat_ssh_calib - l_flat_ssh_true, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
+            freq, psd_err_err = signal.welch(l_flat_ssh_noisy - l_flat_ssh_true, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
+
+            freq, psd_ug_true  = signal.welch(l_flat_ug_true, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
+            freq, psd_ug_noisy = signal.welch(l_flat_ug_noisy, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
+            freq, psd_ug_calib = signal.welch(l_flat_ug_calib, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
+            freq, psd_err_ug = signal.welch(l_flat_ug_calib - l_flat_ug_true, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
+            freq, psd_err_err_ug = signal.welch(l_flat_ug_noisy - l_flat_ug_true, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
+
+            freq, psd_ksi_true  = signal.welch(l_flat_ksi_true, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
+            freq, psd_ksi_noisy = signal.welch(l_flat_ksi_noisy, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
+            freq, psd_ksi_calib = signal.welch(l_flat_ksi_calib, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
+            freq, psd_err_ksi = signal.welch(l_flat_ksi_calib - l_flat_ksi_true, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
+            freq, psd_err_err_ksi = signal.welch(l_flat_ksi_noisy - l_flat_ksi_true, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
         
-        freq, psd_ug_true  = signal.welch(l_flat_ug_true, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
-        freq, psd_ug_noisy = signal.welch(l_flat_ug_noisy, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
-        freq, psd_ug_calib = signal.welch(l_flat_ug_calib, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
-        freq, psd_err_ug = signal.welch(l_flat_ug_calib - l_flat_ug_true, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
-        freq, psd_err_err_ug = signal.welch(l_flat_ug_noisy - l_flat_ug_true, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
         
-        freq, psd_ksi_true  = signal.welch(l_flat_ksi_true, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
-        freq, psd_ksi_noisy = signal.welch(l_flat_ksi_noisy, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
-        freq, psd_ksi_calib = signal.welch(l_flat_ksi_calib, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
-        freq, psd_err_ksi = signal.welch(l_flat_ksi_calib - l_flat_ksi_true, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
-        freq, psd_err_err_ksi = signal.welch(l_flat_ksi_noisy - l_flat_ksi_true, fs=1./resolution, window='hann', nperseg=npt, noverlap=0, detrend='constant', return_onesided=True, scaling='density', average='mean')
+        elif psd_type == 'powerspec': 
+            from src import powerspec
+            
+            lon = swt._dset.lon.values 
+            lat = swt._dset.lat.values 
+            
+            swt_input.fill_nadir_gap('ssh_true')
+            swt_input.fill_nadir_gap('ssh_err')
+            swt.fill_nadir_gap(etuvar)
+                
+            ssh_true = np.ma.array(swt_input._dset['ssh_true'].values )
+            ssh_noisy = np.ma.array(swt_input._dset['ssh_err'].values )
+            ssh_calib = np.ma.array(swt._dset[etuvar].values )
+
+            swt_input.fill_nadir_gap('true_geos_current')
+            swt_input.fill_nadir_gap('simulated_noise_geos_current')
+            swt.fill_nadir_gap('calib_geos_current')
+            
+            ug_true = np.ma.array(swt_input._dset['true_geos_current'].values )
+            ug_noisy = np.ma.array(swt_input._dset['simulated_noise_geos_current'].values )
+            ug_calib = np.ma.array(swt._dset['calib_geos_current'].values )
+
+            swt_input.fill_nadir_gap('true_ksi')
+            swt_input.fill_nadir_gap('simulated_noise_ksi')
+            swt.fill_nadir_gap('calib_ksi')
+            
+            ksi_true = np.ma.array(swt_input._dset['true_ksi'].values )
+            ksi_noisy = np.ma.array(swt_input._dset['simulated_noise_ksi'].values )
+            ksi_calib = np.ma.array(swt._dset['calib_ksi'].values )
+            
+            freq, psd_ssh_true  = powerspec.wavenumber_spectra(ssh_true,lon,lat,None,None)
+            freq, psd_ssh_noisy = powerspec.wavenumber_spectra(ssh_noisy,lon,lat,None,None)
+            freq, psd_ssh_calib = powerspec.wavenumber_spectra(ssh_calib,lon,lat,None,None)
+            freq, psd_err       = powerspec.wavenumber_spectra(ssh_calib-ssh_true,lon,lat,None,None)
+            freq, psd_err_err   = powerspec.wavenumber_spectra(ssh_noisy-ssh_true,lon,lat,None,None)
+
+            freq, psd_ug_true  = powerspec.wavenumber_spectra(ug_true,lon,lat,None,None)
+            freq, psd_ug_noisy = powerspec.wavenumber_spectra(ug_noisy,lon,lat,None,None)
+            freq, psd_ug_calib = powerspec.wavenumber_spectra(ug_calib,lon,lat,None,None)
+            freq, psd_err_ug   = powerspec.wavenumber_spectra(ug_calib-ug_true,lon,lat,None,None)
+            freq, psd_err_err_ug = powerspec.wavenumber_spectra(ug_noisy-ug_true,lon,lat,None,None)
+
+            freq, psd_ksi_true  = powerspec.wavenumber_spectra(ksi_true,lon,lat,None,None)
+            freq, psd_ksi_noisy = powerspec.wavenumber_spectra(ksi_noisy,lon,lat,None,None)
+            freq, psd_ksi_calib = powerspec.wavenumber_spectra(ksi_calib,lon,lat,None,None)
+            freq, psd_err_ksi = powerspec.wavenumber_spectra(ksi_calib-ksi_true,lon,lat,None,None)
+            freq, psd_err_err_ksi = powerspec.wavenumber_spectra(ksi_noisy-ksi_true,lon,lat,None,None)
+            
+            freq = freq*1e3
+
+            
         
         self.freq = freq
         self.cross_spectrum = cross_spectrum
@@ -609,10 +684,10 @@ class Benchmark(object):
         self.psd_err_err_ksi = psd_err_err_ksi
     
     
-    def write_along_track_psd(self, fname, **kwargs):
+    def write_along_track_psd(self, fname, psd_type = 'welch', **kwargs):
         """ export des résultats vers un fichier NetCDF """
         
-        def compute_snr1(array, wavenumber, threshold=1.0):
+        def compute_snr1(array, wavenumber, threshold=0.5):
             """
             :param array:
             :param wavenumber:
@@ -645,14 +720,18 @@ class Benchmark(object):
                         resolution_scale = 0.
             
                     list_of_res.append(resolution_scale)
-
-            else:
-                resolution_scale = 0.
-            #print(list_of_res)
-            if len(list_of_res) > 0:
-                resolution_scale = np.nanmax(np.asarray(list_of_res))
-            else:
-                resolution_scale = 1000.
+                
+                if len(list_of_res) > 0:
+                    resolution_scale = np.nanmax(np.asarray(list_of_res))
+                else: 
+                    resolution_scale = np.nanmin(1./wavenumber[wavenumber!=0])
+ 
+            else:  
+                if np.all( array - threshold>0 )>0:
+                    resolution_scale = np.nan
+                else : 
+                    resolution_scale = np.nanmin(1./wavenumber[wavenumber!=0])
+            #print(list_of_res) 
         
             return resolution_scale#, flag_multiple_crossing
         
@@ -665,30 +744,57 @@ class Benchmark(object):
         self.wavelength_snr1_calib_ksi = compute_snr1(self.psd_err_ksi/self.psd_ksi_true, self.freq)
         self.wavelength_snr1_nocalib_ksi = compute_snr1(self.psd_err_err_ksi/self.psd_ksi_true, self.freq)
         
-        to_write = xr.Dataset(
-            data_vars=dict(
-                psd_ssh_true=(["wavenumber"], self.psd_ssh_true),
-                cross_spectrum_r=(["wavenumber"], np.real(self.cross_spectrum)),
-                cross_spectrum_i=(["wavenumber"], np.imag(self.cross_spectrum)),
-                psd_ssh_noisy=(["wavenumber"], self.psd_ssh_noisy),
-                psd_ssh_calib=(["wavenumber"], self.psd_ssh_calib),
-                psd_err=(["wavenumber"], self.psd_err),
-                psd_err_err=(["wavenumber"], self.psd_err_err),
-                snr1_calib=(["wavelength_snr1"], [1]),
-                
-                psd_ug_true=(["wavenumber"], self.psd_ug_true),
-                psd_ug_noisy=(["wavenumber"], self.psd_ug_noisy),
-                psd_ug_calib=(["wavenumber"], self.psd_ug_calib),
-                psd_err_ug=(["wavenumber"], self.psd_err_ug),
-                psd_err_err_ug=(["wavenumber"], self.psd_err_err_ug),
-                
-                psd_ksi_true=(["wavenumber"], self.psd_ksi_true),
-                psd_ksi_noisy=(["wavenumber"], self.psd_ksi_noisy),
-                psd_ksi_calib=(["wavenumber"], self.psd_ksi_calib),
-                psd_err_ksi=(["wavenumber"], self.psd_err_ksi),
-                psd_err_err_ksi=(["wavenumber"], self.psd_err_err_ksi),
+        
+        if psd_type == 'welch':
+            data_vars0 = dict(
+                    psd_ssh_true=(["wavenumber"], self.psd_ssh_true),
+                    cross_spectrum_r=(["wavenumber"], np.real(self.cross_spectrum)),
+                    cross_spectrum_i=(["wavenumber"], np.imag(self.cross_spectrum)),
+                    psd_ssh_noisy=(["wavenumber"], self.psd_ssh_noisy),
+                    psd_ssh_calib=(["wavenumber"], self.psd_ssh_calib),
+                    psd_err=(["wavenumber"], self.psd_err),
+                    psd_err_err=(["wavenumber"], self.psd_err_err),
+                    snr1_calib=(["wavelength_snr1"], [1]),
 
-            ),
+                    psd_ug_true=(["wavenumber"], self.psd_ug_true),
+                    psd_ug_noisy=(["wavenumber"], self.psd_ug_noisy),
+                    psd_ug_calib=(["wavenumber"], self.psd_ug_calib),
+                    psd_err_ug=(["wavenumber"], self.psd_err_ug),
+                    psd_err_err_ug=(["wavenumber"], self.psd_err_err_ug),
+
+                    psd_ksi_true=(["wavenumber"], self.psd_ksi_true),
+                    psd_ksi_noisy=(["wavenumber"], self.psd_ksi_noisy),
+                    psd_ksi_calib=(["wavenumber"], self.psd_ksi_calib),
+                    psd_err_ksi=(["wavenumber"], self.psd_err_ksi),
+                    psd_err_err_ksi=(["wavenumber"], self.psd_err_err_ksi),
+
+                )
+        elif psd_type == 'powerspec':
+            data_vars0 = dict(
+                    psd_ssh_true=(["wavenumber"], self.psd_ssh_true), 
+                    psd_ssh_noisy=(["wavenumber"], self.psd_ssh_noisy),
+                    psd_ssh_calib=(["wavenumber"], self.psd_ssh_calib),
+                    psd_err=(["wavenumber"], self.psd_err),
+                    psd_err_err=(["wavenumber"], self.psd_err_err),
+                    snr1_calib=(["wavelength_snr1"], [1]),
+
+                    psd_ug_true=(["wavenumber"], self.psd_ug_true),
+                    psd_ug_noisy=(["wavenumber"], self.psd_ug_noisy),
+                    psd_ug_calib=(["wavenumber"], self.psd_ug_calib),
+                    psd_err_ug=(["wavenumber"], self.psd_err_ug),
+                    psd_err_err_ug=(["wavenumber"], self.psd_err_err_ug),
+
+                    psd_ksi_true=(["wavenumber"], self.psd_ksi_true),
+                    psd_ksi_noisy=(["wavenumber"], self.psd_ksi_noisy),
+                    psd_ksi_calib=(["wavenumber"], self.psd_ksi_calib),
+                    psd_err_ksi=(["wavenumber"], self.psd_err_ksi),
+                    psd_err_err_ksi=(["wavenumber"], self.psd_err_err_ksi),
+
+                )
+        
+        
+        to_write = xr.Dataset(
+            data_vars=data_vars0,
             coords=dict(
                 wavenumber=(["wavenumber"], self.freq),
                 wavelength_snr1_calib=(["wavelength_snr1"], [self.wavelength_snr1_calib]),
@@ -731,9 +837,9 @@ class Benchmark(object):
         ax = plt.subplot(322)
         ds['SNR_calib'].plot(x='wavelength', label='PSD(SSH$_{err}$)/PSD(SSH$_{true}$)', color='b', xscale='log', lw=3)
         ds['SNR_nocalib'].plot(x='wavelength', label='PSD(Err$_{noise}$)/PSD(SSH$_{true}$)', color='r', lw=2)
-        (ds['SNR_calib']/ds['SNR_calib']).plot(x='wavelength', label='SNR=1', color='grey', lw=2)
-        plt.scatter(ds.wavelength_snr1_calib, 1., color='b', zorder=4, label="SNR1 AFTER calib")
-        plt.scatter(ds.wavelength_snr1_calib, 1., color='r', zorder=4, label="SNR1 BEFORE calib")
+        (ds['SNR_calib']/ds['SNR_calib']*0.5).plot(x='wavelength', label='SNR=1', color='grey', lw=2)
+        plt.scatter(ds.wavelength_snr1_calib, 0.5, color='b', zorder=4, label="SNR1 AFTER calib")
+        plt.scatter(ds.wavelength_snr1_nocalib, 0.5, color='r', zorder=4, label="SNR1 BEFORE calib")
         plt.grid(which='both')
         plt.legend()
         plt.xlabel('wavelenght [km]')
@@ -761,9 +867,9 @@ class Benchmark(object):
         ax = plt.subplot(324)
         ds['SNR_calib_ug'].plot(x='wavelength', label='PSD(Ug$_{err}$)/PSD(Ug$_{true}$)', color='b', xscale='log', lw=3)
         ds['SNR_nocalib_ug'].plot(x='wavelength', label='PSD(Ug$_{noise}$)/PSD(Ug$_{true}$)', color='r', lw=2)
-        (ds['SNR_calib_ug']/ds['SNR_calib_ug']).plot(x='wavelength', label='SNR=1', color='grey', lw=2)
-        plt.scatter(ds.wavelength_snr1_calib_ug, 1., color='b', zorder=4, label="SNR1 AFTER calib")
-        plt.scatter(ds.wavelength_snr1_nocalib_ug, 1., color='r', zorder=4, label="SNR1 BEFORE calib")
+        (ds['SNR_calib_ug']/ds['SNR_calib_ug']*0.5).plot(x='wavelength', label='SNR=1', color='grey', lw=2)
+        plt.scatter(ds.wavelength_snr1_calib_ug, 0.5, color='b', zorder=4, label="SNR1 AFTER calib")
+        plt.scatter(ds.wavelength_snr1_nocalib_ug, 0.5, color='r', zorder=4, label="SNR1 BEFORE calib")
         plt.grid(which='both')
         plt.legend()
         plt.ylim(0, 2)
@@ -790,9 +896,9 @@ class Benchmark(object):
         ax = plt.subplot(326)
         ds['SNR_calib_ksi'].plot(x='wavelength', label='PSD($\zeta_{err}$)/PSD($\zeta_{true}$)', color='b', xscale='log', lw=3)
         ds['SNR_nocalib_ksi'].plot(x='wavelength', label='PSD($\zeta_{noise}$)/PSD($\zeta_{true}$)', color='r', lw=2)
-        (ds['SNR_calib_ksi']/ds['SNR_calib_ksi']).plot(x='wavelength', label='SNR=1', color='grey', lw=2)
-        plt.scatter(ds.wavelength_snr1_calib_ksi, 1., color='b', zorder=4, label="SNR1 AFTER calib")
-        plt.scatter(ds.wavelength_snr1_nocalib_ksi, 1., color='r', zorder=4, label="SNR1 BEFORE calib")
+        (ds['SNR_calib_ksi']/ds['SNR_calib_ksi']*0.5).plot(x='wavelength', label='SNR=1', color='grey', lw=2)
+        plt.scatter(ds.wavelength_snr1_calib_ksi, 0.5, color='b', zorder=4, label="SNR1 AFTER calib")
+        plt.scatter(ds.wavelength_snr1_nocalib_ksi, 0.5, color='r', zorder=4, label="SNR1 BEFORE calib")
         plt.grid(which='both')
         plt.legend()
         plt.ylim(0, 2)
@@ -809,6 +915,31 @@ class Benchmark(object):
         wavelength_snr1_calib = self.wavelength_snr1_calib
         wavelength_snr1_nocalib = self.wavelength_snr1_nocalib
          
+            
+        data = [['no calib', 
+                 'SSH [m]',
+                 self.mean_ssh_nocalib_rmse,  
+                 np.round(wavelength_snr1_nocalib, 1),
+                 notebook_name], 
+                ['no calib', 
+                 'Geostrophic current [m.s$^-1$]',
+                 self.mean_ug_nocalib_rmse,  
+                 np.round(self.wavelength_snr1_nocalib_ug, 1),
+                 notebook_name],
+                ['no calib', 
+                 'Relative vorticity []',
+                 self.mean_ksi_nocalib_rmse,  
+                 np.round(self.wavelength_snr1_nocalib_ksi, 1),
+                 notebook_name]
+               
+               ]
+        
+        Leaderboard_nocalib = pd.DataFrame(data, 
+                           columns=['Method',
+                                    'Field',
+                                    "µ(RMSE)",    
+                                    'λ(SNR1) [km]', 
+                                    'Reference'])
             
             
         data = [[self.calib_name, 
@@ -829,14 +960,17 @@ class Benchmark(object):
                
                ]
         
-        Leaderboard = pd.DataFrame(data, 
+        Leaderboard_calib = pd.DataFrame(data, 
                            columns=['Method',
                                     'Field',
                                     "µ(RMSE)",    
                                     'λ(SNR1) [km]', 
                                     'Reference'])
+        
+        
         print("Summary of the leaderboard metrics:")
-        print(Leaderboard.to_markdown())
+        print(Leaderboard_nocalib.to_markdown())
+        print(Leaderboard_calib.to_markdown())
             
     
     

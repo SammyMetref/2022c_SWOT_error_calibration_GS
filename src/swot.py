@@ -373,7 +373,7 @@ class SwotTrack(object):
         ssha = self.dset[invar].values
         ssha_calib = np.zeros_like(ssha)+np.nan  
 
-        Nens=20
+        Nens=10
         ensanagap = run_CER_method(self,Nens)
 
 
@@ -414,6 +414,25 @@ class SwotTrack(object):
         ssha_detrend, aa1,bb1,cc1,ee11,ee12,ff11,ff12 = obs_detrendswot(ssha, n_gap, removealpha0=True,boxsize = 100000)
 
         self.__enrich_dataset(outvar, ssha_detrend)
+        
+        
+    def apply_ac_track_slope_calib0(self, invar, outvar):
+        """ apply ac track slope calibration, enrich dataset inplace """
+        self.__check_var_exist(invar)
+        if outvar in self._dset.data_vars:
+            self._dset = self._dset.drop(outvar)
+        ssha = self.dset[invar].values
+        ssha_calib = np.zeros_like(ssha)+np.nan   
+        ssha = np.ma.masked_invalid(ssha) 
+        
+        for i in range(np.shape(ssha)[0]): 
+            a,b = np.polyfit(np.arange(int(-np.shape(ssha)[1]/2),int(np.shape(ssha)[1]/2)+1)[~ssha[i,:].mask],  ssha[i,:][~ssha[i,:].mask],1) 
+             
+            ssha_calib[i,:][~ssha[i,:].mask] = ssha[i,:][~ssha[i,:].mask] -  a*np.arange(int(-np.shape(ssha)[1]/2),int(np.shape(ssha)[1]/2)+1)[~ssha[i,:].mask] 
+            
+        ssha_calib = np.ma.masked_invalid(ssha_calib) 
+         
+        self.__enrich_dataset(outvar, ssha_calib)
         
         
         
@@ -533,11 +552,11 @@ class SwotTrack(object):
 
     @property
     def x_at(self):
-        return np.arange(self.dset.dims['num_lines'])
+        return np.arange(self.dset.dims['time'])
 
     @property
     def x_ac(self):
-        return np.arange(self.dset.dims['num_pixels'])
+        return np.arange(self.dset.dims['nC'])
 
     @property
     def longitude(self):

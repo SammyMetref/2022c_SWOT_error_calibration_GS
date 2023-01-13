@@ -101,7 +101,7 @@ def run_CER_method(swt,Nens=10):
 
 
     # Run ETKF
-    sig_obs = 0.01
+    sig_obs = 0.0001
     noise_obs = np.random.normal(0,sig_obs,np.shape(obs))
     
     
