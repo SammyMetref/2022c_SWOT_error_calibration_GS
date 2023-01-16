@@ -117,18 +117,18 @@ If necessary a dataset for *training* purposes is available and can be downloade
 
 | Method   | Field                          |   µ(RMSE) |    λ(SNR1) [km] | Reference                  |
 |:---------|--------:|-----------------:|-------------------------------:|:---------------------------|
-| **No Calib**   | Sea Surface Height [m]|        3.395 |         116.3  |  --- |  
-| ---   | Geostrophic current [m.s$^-1$]|        9.437 |         nan  |  --- |  
-| ---   | Relative vorticity []|        0.760 |         37.9  |  --- | 
-| **Baseline**   | Sea Surface Height [m]|        0.145 |         83.9  |  [demo_generate_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_generate_baseline.ipynb) |  
-| ---   | Geostrophic current $[m.s^{-1}]$|        0.288 |         84.9  |  [demo_generate_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_generate_baseline.ipynb) |  
-| ---   | Relative vorticity []|        0.529 |         **36.5**  |  [demo_generate_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_generate_baseline.ipynb) | 
-| **CER method**   | Sea Surface Height [m]|        0.074 |        **4.2**  |  [generate_CERmethod_calibration.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/generate_CERmethod_calibration.ipynb) |  
-| ---   | Geostrophic current [m.s$^-1$]|        0.219 |         78.4  |  [generate_CERmethod_calibration.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/generate_CERmethod_calibration.ipynb) |  
-| ---   | Relative vorticity []|        0.261 |         103.4  |  [generate_CERmethod_calibration.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/generate_CERmethod_calibration.ipynb) | 
-| **CalCNN**   | Sea Surface Height [m]|        **0.014** |         **4.2**  |  Offline generation ; evaluation: [here](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/evaluate_CalCNNmethod_calibration.ipynb) |  
-| ---   | Geostrophic current [m.s$^-1$]|        **0.076** |         **30.6**  | Offline generation ; evaluation: [here](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/evaluate_CalCNNmethod_calibration.ipynb)  |  
-| ---   | Relative vorticity []|        **0.212** |         37.9  | Offline generation ; evaluation: [here](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/evaluate_CalCNNmethod_calibration.ipynb)  | 
+| **No Calib**   | Sea Surface Height $[m]$|        3.395 |         116.3  |  --- |  
+| ---   | Geos. current $[m.s^{-1}]$|        9.437 |         nan  |  --- |  
+| ---   | Relative vorticity $[]$|        0.760 |         37.9  |  --- | 
+| **Baseline**   | Sea Surface Height $[m]$|        0.145 |         83.9  |  [demo_generate_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_generate_baseline.ipynb) |  
+| ---   | Geos. current $[m.s^{-1}]$|        0.288 |         84.9  |  [demo_generate_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_generate_baseline.ipynb) |  
+| ---   | Relative vorticity $[]$|        0.529 |         **36.5**  |  [demo_generate_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_generate_baseline.ipynb) | 
+| **CER method**   | Sea Surface Height $[m]$|        0.074 |        **4.2**  |  [generate_CERmethod_calibration.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/generate_CERmethod_calibration.ipynb) |  
+| ---   | Geos. current $[m.s^{-1}]$|        0.219 |         78.4  |  [generate_CERmethod_calibration.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/generate_CERmethod_calibration.ipynb) |  
+| ---   | Relative vorticity $[]$|        0.261 |         103.4  |  [generate_CERmethod_calibration.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/generate_CERmethod_calibration.ipynb) | 
+| **CalCNN**   | Sea Surface Height $[m]$|        **0.014** |         **4.2**  |  Offline generation ; evaluation: [here](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/evaluate_CalCNNmethod_calibration.ipynb) |  
+| ---   | Geos. current $[m.s^{-1}]$|        **0.076** |         **30.6**  | Offline generation ; evaluation: [here](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/evaluate_CalCNNmethod_calibration.ipynb)  |  
+| ---   | Relative vorticity $[]$|        **0.212** |         37.9  | Offline generation ; evaluation: [here](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/evaluate_CalCNNmethod_calibration.ipynb)  | 
 
  
 
