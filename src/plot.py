@@ -9,9 +9,9 @@ from .swot import *
 def compare_stat(filename_ref, filename_etu, **kwargs):
     
     ds_ref = xr.open_dataset(filename_ref)
-    ref_filter = ds_ref.filter_type
+    ref_filter = ds_ref.calib_type
     ds_etu = xr.open_dataset(filename_etu)
-    etu_filter = ds_etu.filter_type
+    etu_filter = ds_etu.calib_type
     
     ds = 100*(ds_etu - ds_ref)/ds_ref
     
@@ -26,6 +26,7 @@ def compare_stat(filename_ref, filename_etu, **kwargs):
     plt.title('$\Delta$ RMSE SSH field ' + f'{etu_filter} vs {ref_filter}', fontweight='bold')
     ax.add_feature(cfeature.LAND, zorder=2)
     ax.coastlines(zorder=2)
+    ax.axis([-65,-55,33,43])
 
     ax = plt.subplot(312, projection=ccrs.PlateCarree())
     vmin = np.nanpercentile(ds.ug_rmse, 5)
@@ -35,6 +36,7 @@ def compare_stat(filename_ref, filename_etu, **kwargs):
     plt.title('$\Delta$ RMSE GEOSTROPPHIC CURRENT field ' + f'{etu_filter} vs {ref_filter}', fontweight='bold')
     ax.add_feature(cfeature.LAND, zorder=2)
     ax.coastlines(zorder=2)
+    ax.axis([-65,-55,33,43])
         
     ax = plt.subplot(313, projection=ccrs.PlateCarree())
     vmin = np.nanpercentile(ds.ksi_rmse, 5)
@@ -44,6 +46,7 @@ def compare_stat(filename_ref, filename_etu, **kwargs):
     plt.title('$\Delta$ RMSE Relative vorticity '+ f'{etu_filter} vs {ref_filter}', fontweight='bold')
     ax.add_feature(cfeature.LAND, zorder=2)
     ax.coastlines(zorder=2)
+    ax.axis([-65,-55,33,43])
 
     plt.show()
     
@@ -225,8 +228,8 @@ def compare_psd(list_of_filename, list_of_label):
     ds['psd_ssh_true'][0, :].plot(x='wavelength', label='PSD(SSH$_{true}$)', color='k', xscale='log', yscale='log', lw=3)
     ds['psd_ssh_noisy'][0, :].plot(x='wavelength', label='PSD(SSH$_{noisy}$)', color='r', lw=2)
     for exp in ds['experiment'].values:
-        (ds['psd_ssh_filtered'].where(ds['experiment']==exp, drop=True)).plot(x='wavelength', label='PSD(SSH$_{filtered}$)' + f'({exp})', lw=2)
-        (ds['psd_err'].where(ds['experiment']==exp, drop=True)).plot(x='wavelength', label='PSD(SSH$_{err}$)' + f'({exp})', lw=2)
+        (ds['psd_ssh_calib'].where(ds['experiment']==exp, drop=True)).plot(x='wavelength', label='PSD(SSH$_{calib}$)' + f'({exp})', lw=2)
+        #(ds['psd_err'].where(ds['experiment']==exp, drop=True)).plot(x='wavelength', label='PSD(SSH$_{err}$)' + f'({exp})', lw=2)
     plt.grid(which='both')
     plt.legend()
     plt.xlabel('wavelenght [km]')
@@ -234,15 +237,15 @@ def compare_psd(list_of_filename, list_of_label):
     ax.invert_xaxis()
     plt.title('PSD Sea Surface Height')
 
-    ds['SNR_filter'] = ds['psd_err']/ds['psd_ssh_true']
-    ds['SNR_nofilter'] = ds['psd_err_karin']/ds['psd_ssh_true']
+    ds['SNR_calib'] = ds['psd_err']/ds['psd_ssh_true']
+    ds['SNR_nocalib'] = ds['psd_err_err']/ds['psd_ssh_true']
     ax = plt.subplot(322)
     for exp in ds['experiment'].values:
-        (ds['SNR_filter'].where(ds['experiment']==exp, drop=True)).plot(x='wavelength', label='PSD(SSH$_{err}$)/PSD(SSH$_{true}$)' + f'({exp})', xscale='log', lw=3)
-        plt.scatter(ds.wavelength_snr1_filter.where(ds['experiment']==exp, drop=True), 1., zorder=4, label="SNR1 AFTER filter" + f'({exp})')
-    ds['SNR_nofilter'][0, :].plot(x='wavelength', label='PSD(Karin$_{noise}$)/PSD(SSH$_{true}$)', color='r', lw=2)
-    (ds['SNR_filter'][0, :]/ds['SNR_filter'][0, :]).plot(x='wavelength', label='SNR=1', color='grey', lw=2)
-    plt.scatter(ds.wavelength_snr1_nofilter[0, :], 1., color='r', zorder=4, label="SNR1 BEFORE filter")
+        (ds['SNR_calib'].where(ds['experiment']==exp, drop=True)).plot(x='wavelength', label='PSD(SSH$_{err}$)/PSD(SSH$_{true}$)' + f'({exp})', xscale='log', lw=3)
+        plt.scatter(ds.wavelength_snr1_calib.where(ds['experiment']==exp, drop=True), 0.5, zorder=4)
+    ds['SNR_nocalib'][0, :].plot(x='wavelength', label='PSD(Err$_{noise}$)/PSD(SSH$_{true}$)', color='r', lw=2)
+    (ds['SNR_calib'][0, :]/ds['SNR_calib'][0, :]*0.5).plot(x='wavelength', label='SNR=1', color='grey', lw=2)
+    plt.scatter(ds.wavelength_snr1_nocalib[0], 0.5, color='r', zorder=4)
     plt.grid(which='both')
     plt.legend()
     plt.xlabel('wavelenght [km]')
@@ -257,8 +260,8 @@ def compare_psd(list_of_filename, list_of_label):
     ds['psd_ug_true'][0, :].plot(x='wavelength', label='PSD(Ug$_{true}$)', color='k', xscale='log', yscale='log', lw=3)
     ds['psd_ug_noisy'][0, :].plot(x='wavelength', label='PSD(Ug$_{noisy}$)', color='r', lw=2)
     for exp in ds['experiment'].values:
-        (ds['psd_ug_filtered'].where(ds['experiment']==exp, drop=True)).plot(x='wavelength', label='PSD(Ug$_{filtered}$)' + f'({exp})', lw=2)
-        (ds['psd_err_ug'].where(ds['experiment']==exp, drop=True)).plot(x='wavelength', label=f'PSD(err)' + f'({exp})', lw=2)
+        (ds['psd_ug_calib'].where(ds['experiment']==exp, drop=True)).plot(x='wavelength', label='PSD(Ug$_{calib}$)' + f'({exp})', lw=2)
+        #(ds['psd_err_ug'].where(ds['experiment']==exp, drop=True)).plot(x='wavelength', label=f'PSD(err)' + f'({exp})', lw=2)
     plt.grid(which='both')
     plt.legend()
     plt.xlabel('wavelenght [km]')
@@ -266,15 +269,15 @@ def compare_psd(list_of_filename, list_of_label):
     ax.invert_xaxis()
     plt.title('PSD Geostrophic current')
 
-    ds['SNR_filter_ug'] = ds['psd_err_ug']/ds['psd_ug_true']
-    ds['SNR_nofilter_ug'] = ds['psd_err_karin_ug']/ds['psd_ug_true']
+    ds['SNR_calib_ug'] = ds['psd_err_ug']/ds['psd_ug_true']
+    ds['SNR_nocalib_ug'] = ds['psd_err_err_ug']/ds['psd_ug_true']
     ax = plt.subplot(324)
     for exp in ds['experiment'].values:
-        (ds['SNR_filter_ug'].where(ds['experiment']==exp, drop=True)).plot(x='wavelength', label='PSD(Ug$_{err}$)/PSD(Ug$_{true}$)' + f'({exp})', xscale='log', lw=3)
-        plt.scatter(ds.wavelength_snr1_filter_ug.where(ds['experiment']==exp, drop=True), 1., zorder=4, label="SNR1 AFTER filter" + f'({exp})')
-    ds['SNR_nofilter_ug'][0, :].plot(x='wavelength', label='PSD(Ug$_{noise}$)/PSD(Ug$_{true}$)', color='r', lw=2)
-    (ds['SNR_filter_ug'][0, :]/ds['SNR_filter_ug'][0, :]).plot(x='wavelength', label='SNR=1', color='grey', lw=2)
-    plt.scatter(ds.wavelength_snr1_nofilter_ug[0, :], 1., color='r', zorder=4, label="SNR1 BEFORE filter")
+        (ds['SNR_calib_ug'].where(ds['experiment']==exp, drop=True)).plot(x='wavelength', label='PSD(Ug$_{err}$)/PSD(Ug$_{true}$)' + f'({exp})', xscale='log', lw=3)
+        plt.scatter(ds.wavelength_snr1_calib_ug.where(ds['experiment']==exp, drop=True), 0.5, zorder=4)
+    ds['SNR_nocalib_ug'][0, :].plot(x='wavelength', label='PSD(Ug$_{noise}$)/PSD(Ug$_{true}$)', color='r', lw=2)
+    (ds['SNR_calib_ug'][0, :]/ds['SNR_calib_ug'][0, :]*0.5).plot(x='wavelength', label='SNR=1', color='grey', lw=2)
+    plt.scatter(ds.wavelength_snr1_nocalib_ug[0], 0.5, color='r', zorder=4)
     plt.grid(which='both')
     plt.legend()
     plt.ylim(0, 2)
@@ -288,8 +291,8 @@ def compare_psd(list_of_filename, list_of_label):
     ds['psd_ksi_true'][0, :].plot(x='wavelength', label='PSD($\zeta_{true}$)', color='k', xscale='log', yscale='log', lw=3)
     ds['psd_ksi_noisy'][0, :].plot(x='wavelength', label='PSD($\zeta_{noisy}$)', color='r', lw=2)
     for exp in ds['experiment'].values:
-        (ds['psd_ksi_filtered'].where(ds['experiment']==exp, drop=True)).plot(x='wavelength', label='PSD($\zeta_{filtered}$)' + f'({exp})', lw=2)
-        (ds['psd_err_ksi'].where(ds['experiment']==exp, drop=True)).plot(x='wavelength', label=f'PSD(err)' + f'({exp})', lw=2)
+        (ds['psd_ksi_calib'].where(ds['experiment']==exp, drop=True)).plot(x='wavelength', label='PSD($\zeta_{calib}$)' + f'({exp})', lw=2)
+        #(ds['psd_err_ksi'].where(ds['experiment']==exp, drop=True)).plot(x='wavelength', label=f'PSD(err)' + f'({exp})', lw=2)
     plt.grid(which='both')
     plt.legend()
     plt.xlabel('wavelenght [km]')
@@ -297,15 +300,15 @@ def compare_psd(list_of_filename, list_of_label):
     ax.invert_xaxis()
     plt.title('PSD Relative vorticity')
 
-    ds['SNR_filter_ksi'] = ds['psd_err_ksi']/ds['psd_ksi_true']
-    ds['SNR_nofilter_ksi'] = ds['psd_err_karin_ksi']/ds['psd_ksi_true']
+    ds['SNR_calib_ksi'] = ds['psd_err_ksi']/ds['psd_ksi_true']
+    ds['SNR_nocalib_ksi'] = ds['psd_err_err_ksi']/ds['psd_ksi_true']
     ax = plt.subplot(326)
     for exp in ds['experiment'].values:
-        (ds['SNR_filter_ksi'].where(ds['experiment']==exp, drop=True)).plot(x='wavelength', label='PSD($\zeta_{err}$)/PSD($\zeta_{true}$)' + f'({exp})', xscale='log', lw=3)
-        plt.scatter(ds.wavelength_snr1_filter_ksi.where(ds['experiment']==exp, drop=True), 1., zorder=4, label="SNR1 AFTER filter" + f'({exp})')
-    ds['SNR_nofilter_ksi'][0, :].plot(x='wavelength', label='PSD($\zeta_{noise}$)/PSD($\zeta_{true}$)', color='r', lw=2)
-    (ds['SNR_filter_ksi'][0, :]/ds['SNR_filter_ksi'][0, :]).plot(x='wavelength', label='SNR=1', color='grey', lw=2)
-    plt.scatter(ds.wavelength_snr1_nofilter_ksi, 1., color='r', zorder=4, label="SNR1 BEFORE filter")
+        (ds['SNR_calib_ksi'].where(ds['experiment']==exp, drop=True)).plot(x='wavelength', label='PSD($\zeta_{err}$)/PSD($\zeta_{true}$)' + f'({exp})', xscale='log', lw=3)
+        plt.scatter(ds.wavelength_snr1_calib_ksi.where(ds['experiment']==exp, drop=True), 0.5, zorder=4)
+    ds['SNR_nocalib_ksi'][0, :].plot(x='wavelength', label='PSD($\zeta_{noise}$)/PSD($\zeta_{true}$)', color='r', lw=2)
+    (ds['SNR_calib_ksi'][0, :]/ds['SNR_calib_ksi'][0, :]*0.5).plot(x='wavelength', label='SNR=1', color='grey', lw=2)
+    plt.scatter(ds.wavelength_snr1_nocalib_ksi, 0.5, color='r', zorder=4)
     plt.grid(which='both')
     plt.legend()
     plt.ylim(0, 2)
