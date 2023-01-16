@@ -116,7 +116,7 @@ If necessary a dataset for *training* purposes is available and can be downloade
 ### Leaderboard
 
 | Method   | Field                          |   µ(RMSE) |    λ(SNR1) [km] | Reference                  |
-|:---------|--------:|-----------------:|-------------------------------:|:---------------------------|
+|:---------|-----------------------:|----------:|-------------------------------:|:---------------------------|
 | **No Calib**   | SSH $[m]$|        3.395 |         116.3  |  --- |  
 | ---   | Geos. current $[m.s^{-1}]$|        9.437 |         nan  |  --- |  
 | ---   | Relative vorticity $[]$|        0.760 |         37.9  |  --- | 
