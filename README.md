@@ -121,7 +121,7 @@ If necessary a dataset for *training* purposes is available and can be downloade
 | ---   | Geostrophic current [m.s$^-1$]|        9.437 |         nan  |  --- |  
 | ---   | Relative vorticity []|        0.760 |         37.9  |  --- | 
 | **Baseline**   | Sea Surface Height [m]|        0.145 |         83.9  |  [demo_generate_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_generate_baseline.ipynb) |  
-| ---   | Geostrophic current m.s$^-1$|        0.288 |         84.9  |  [demo_generate_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_generate_baseline.ipynb) |  
+| ---   | Geostrophic current $[m.s^{-1}]$|        0.288 |         84.9  |  [demo_generate_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_generate_baseline.ipynb) |  
 | ---   | Relative vorticity []|        0.529 |         **36.5**  |  [demo_generate_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_generate_baseline.ipynb) | 
 | **CER method**   | Sea Surface Height [m]|        0.074 |        **4.2**  |  [generate_CERmethod_calibration.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/generate_CERmethod_calibration.ipynb) |  
 | ---   | Geostrophic current [m.s$^-1$]|        0.219 |         78.4  |  [generate_CERmethod_calibration.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/generate_CERmethod_calibration.ipynb) |  
