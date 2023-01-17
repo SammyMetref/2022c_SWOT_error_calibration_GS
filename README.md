@@ -48,7 +48,7 @@ The evaluation of the calibration methods is based on the comparison of the SWOT
 
 After running the evaluation notebook for a method, the files stat_'METHOD'.nc (RMSE data), psd_'METHOD'.nc (PSD and SNR data) and ldb_'METHOD'.nc (Leaderboard data) are saved in the chosen foler. 
 
-A comparison notebook: [compare_evaluations](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/compare_evaluations.ipynb) is available to plot and compare the statistics and the spectral diagnostics of multiple methods in the same figures. Also, the leaderboard for each method can be printed. 
+A comparison notebook, [compare_evaluations],(https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/compare_evaluations.ipynb) is available to plot and compare the statistics and the spectral diagnostics of multiple methods in the same figures. Also, the leaderboard for each method can be printed. 
 
 
 ## 3. To get started
