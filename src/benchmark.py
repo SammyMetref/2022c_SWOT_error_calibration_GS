@@ -826,7 +826,7 @@ class Benchmark(object):
         ds['psd_ssh_calib'].plot(x='wavelength', label='PSD(SSH$_{calib}$)', color='b', lw=2)
         ds['psd_err'].plot(x='wavelength', label='PSD(SSH$_{err}$)', color='grey', lw=2)
         plt.grid(which='both')
-        plt.loglog(ds['wavelength'],ds['wavelength']**(5)/(ds['psd_ssh_noisy'][0]),'k--' ,label='k$^{-5}$') 
+        #plt.loglog(ds['wavelength'],ds['wavelength']**(5)/(ds['psd_ssh_noisy'][0]),'k--' ,label='k$^{-5}$') 
         plt.legend()
         plt.xlabel('wavelenght [km]')
         plt.ylabel('PSD [m$^2$.cy$^{-1}$.km$^{-1}$]')
@@ -857,7 +857,7 @@ class Benchmark(object):
         ds['psd_ug_calib'].plot(x='wavelength', label='PSD(Ug$_{calib}$)', color='b', lw=2)
         ds['psd_err_ug'].plot(x='wavelength', label='PSD(err)', color='grey', lw=2)
         plt.grid(which='both')
-        plt.loglog(ds['wavelength'],ds['wavelength']**(3),'k--' ,label='k$^{-3}$') 
+        #plt.loglog(ds['wavelength'],ds['wavelength']**(3),'k--' ,label='k$^{-3}$') 
         plt.legend()
         plt.xlabel('wavelenght [km]')
         plt.ylabel('PSD [m$^2$.s$^{-2}$.cy$^{-1}$.km$^{-1}$]')
@@ -912,7 +912,7 @@ class Benchmark(object):
         plt.show()
     
     
-    def summary(self, notebook_name):
+    def summary(self, notebook_name, fname=None):
         
         wavelength_snr1_calib = self.wavelength_snr1_calib
         wavelength_snr1_nocalib = self.wavelength_snr1_nocalib
@@ -942,6 +942,9 @@ class Benchmark(object):
                                     "µ(RMSE)",    
                                     'λ(SNR1) [km]', 
                                     'Reference'])
+        
+        d_ldb = xr.Dataset(Leaderboard_nocalib)
+        d_ldb.to_netcdf('../results/no_calib/ldb_nocalib.nc')
             
             
         data = [[self.calib_name, 
@@ -969,6 +972,10 @@ class Benchmark(object):
                                     'λ(SNR1) [km]', 
                                     'Reference'])
         
+        d_ldb = xr.Dataset(Leaderboard_calib)
+        
+        if fname is not None:
+            d_ldb.to_netcdf(fname)
         
         print("Summary of the leaderboard metrics:")
         print(Leaderboard_nocalib.to_markdown())

@@ -319,6 +319,26 @@ def compare_psd(list_of_filename, list_of_label):
         
     plt.show()
     
+        
+    
+def compare_leaderboard(path_leaderboards):
+        
+    print("Summary of the leaderboard comparison:")
+    
+    ds_ldb = xr.open_dataset('../results/no_calib/ldb_nocalib.nc')
+    df_ldb = ds_ldb.to_dataframe() 
+    print(df_ldb.to_markdown())
+        
+    for path_leaderboard in path_leaderboards:  
+         
+        ds_ldb = xr.open_dataset(path_leaderboard)  
+        df_ldb = ds_ldb.to_dataframe() 
+        print(df_ldb.to_markdown())
+         
+            
+    
+    
+    
     
     
 def plot_demo_pass(file_ref_input, file_calib):
