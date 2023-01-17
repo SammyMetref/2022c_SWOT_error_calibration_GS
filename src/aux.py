@@ -141,7 +141,13 @@ def interp_ens_to_track(ens_path,swt,Nens=10,nselect=60):
     ssh_ens = np.zeros([Nens,np.shape(ds_ens.lon)[0],np.shape(ds_ens.lat)[0]])
 
     ii_ens = 0
-    for iens in np.random.randint(max(0,i_swt-int(nselect/2)),min(ds_ens.time.size,i_swt+int(nselect/2)),Nens):#np.shape(ds_ens.ssh)[0]
+    
+    if nselect==1:
+        random_members = [i_swt]
+    else:
+        random_members = np.random.randint(max(0,i_swt-int(nselect/2)),min(ds_ens.time.size,i_swt+int(nselect/2)),Nens)
+    
+    for iens in random_members:#np.shape(ds_ens.ssh)[0]
 
         #print(iens)
 
