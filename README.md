@@ -46,6 +46,10 @@ The baseline method is a very simple and straightforward method that removes the
 
 The evaluation of the calibration methods is based on the comparison of the SWOT calibrated swaths with the error-free SWOT swaths. It includes two scores, one based on the Root-Mean-Square Error (RMSE), the other a noise-to-signal ratio based on Fourier wavenumber spectra. The evaluation notebook [demo_evaluate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/demo_evaluate_baseline.ipynb) implements the computation of these two scores for the baseline as they appear in the leaderboard. 
 
+After running the evaluation notebook for a method, the files stat_'METHOD'.nc (RMSE data), psd_'METHOD'.nc (PSD and SNR data) and ldb_'METHOD'.nc (Leaderboard data) are saved in the chosen foler. 
+
+A comparison notebook: [compare_evaluations](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebook/compare_evaluations.ipynb) is available to plot and compare the statistics and the spectral diagnostics of multiple methods in the same figures. Also, the leaderboard for each method can be printed. 
+
 
 ## 3. To get started
 
