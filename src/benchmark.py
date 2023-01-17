@@ -641,23 +641,23 @@ class Benchmark(object):
             ksi_noisy = np.ma.array(swt_input._dset['simulated_noise_ksi'].values )
             ksi_calib = np.ma.array(swt._dset['calib_ksi'].values )
             
-            freq, psd_ssh_true  = powerspec.wavenumber_spectra(ssh_true,lon,lat,'Tukey',None)
-            freq, psd_ssh_noisy = powerspec.wavenumber_spectra(ssh_noisy,lon,lat,'Tukey',None)
-            freq, psd_ssh_calib = powerspec.wavenumber_spectra(ssh_calib,lon,lat,'Tukey',None)
-            freq, psd_err       = powerspec.wavenumber_spectra(ssh_calib-ssh_true,lon,lat,'Tukey',None)
-            freq, psd_err_err   = powerspec.wavenumber_spectra(ssh_noisy-ssh_true,lon,lat,'Tukey',None)
+            freq, psd_ssh_true  = powerspec.wavenumber_spectra(ssh_true,lon,lat,None,None)
+            freq, psd_ssh_noisy = powerspec.wavenumber_spectra(ssh_noisy,lon,lat,None,None)
+            freq, psd_ssh_calib = powerspec.wavenumber_spectra(ssh_calib,lon,lat,None,None)
+            freq, psd_err       = powerspec.wavenumber_spectra(ssh_calib-ssh_true,lon,lat,None,None)
+            freq, psd_err_err   = powerspec.wavenumber_spectra(ssh_noisy-ssh_true,lon,lat,None,None)
 
-            freq, psd_ug_true  = powerspec.wavenumber_spectra(ug_true,lon,lat,'Tukey',None)
-            freq, psd_ug_noisy = powerspec.wavenumber_spectra(ug_noisy,lon,lat,'Tukey',None)
-            freq, psd_ug_calib = powerspec.wavenumber_spectra(ug_calib,lon,lat,'Tukey',None)
-            freq, psd_err_ug   = powerspec.wavenumber_spectra(ug_calib-ug_true,lon,lat,'Tukey',None)
-            freq, psd_err_err_ug = powerspec.wavenumber_spectra(ug_noisy-ug_true,lon,lat,'Tukey',None)
+            freq, psd_ug_true  = powerspec.wavenumber_spectra(ug_true,lon,lat,None,None)
+            freq, psd_ug_noisy = powerspec.wavenumber_spectra(ug_noisy,lon,lat,None,None)
+            freq, psd_ug_calib = powerspec.wavenumber_spectra(ug_calib,lon,lat,None,None)
+            freq, psd_err_ug   = powerspec.wavenumber_spectra(ug_calib-ug_true,lon,lat,None,None)
+            freq, psd_err_err_ug = powerspec.wavenumber_spectra(ug_noisy-ug_true,lon,lat,None,None)
 
-            freq, psd_ksi_true  = powerspec.wavenumber_spectra(ksi_true,lon,lat,'Tukey',None)
-            freq, psd_ksi_noisy = powerspec.wavenumber_spectra(ksi_noisy,lon,lat,'Tukey',None)
-            freq, psd_ksi_calib = powerspec.wavenumber_spectra(ksi_calib,lon,lat,'Tukey',None)
-            freq, psd_err_ksi = powerspec.wavenumber_spectra(ksi_calib-ksi_true,lon,lat,'Tukey',None)
-            freq, psd_err_err_ksi = powerspec.wavenumber_spectra(ksi_noisy-ksi_true,lon,lat,'Tukey',None)
+            freq, psd_ksi_true  = powerspec.wavenumber_spectra(ksi_true,lon,lat,None,None)
+            freq, psd_ksi_noisy = powerspec.wavenumber_spectra(ksi_noisy,lon,lat,None,None)
+            freq, psd_ksi_calib = powerspec.wavenumber_spectra(ksi_calib,lon,lat,None,None)
+            freq, psd_err_ksi = powerspec.wavenumber_spectra(ksi_calib-ksi_true,lon,lat,None,None)
+            freq, psd_err_err_ksi = powerspec.wavenumber_spectra(ksi_noisy-ksi_true,lon,lat,None,None)
             
             freq = freq*1e3
 

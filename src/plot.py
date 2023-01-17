@@ -308,7 +308,7 @@ def compare_psd(list_of_filename, list_of_label):
         plt.scatter(ds.wavelength_snr1_calib_ksi.where(ds['experiment']==exp, drop=True), 0.5, zorder=4)
     ds['SNR_nocalib_ksi'][0, :].plot(x='wavelength', label='PSD($\zeta_{noise}$)/PSD($\zeta_{true}$)', color='r', lw=2)
     (ds['SNR_calib_ksi'][0, :]/ds['SNR_calib_ksi'][0, :]*0.5).plot(x='wavelength', label='SNR=1', color='grey', lw=2)
-    plt.scatter(ds.wavelength_snr1_nocalib_ksi, 0.5, color='r', zorder=4)
+    plt.scatter(ds.wavelength_snr1_nocalib_ksi[0], 0.5, color='r', zorder=4)
     plt.grid(which='both')
     plt.legend()
     plt.ylim(0, 2)
