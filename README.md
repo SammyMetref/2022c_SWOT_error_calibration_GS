@@ -6,7 +6,7 @@ A challenge on the SWOT satellite error calibration organised by Datlas, IGE, IM
 
 ## 1. Context & Motivation
 
-The two-dimensional sea level SWOT products are very much expected to be a game changer in many oceanographic applications which will make them an unprecedented L3 product to be distributed. The row SWOT data will however be contaminated by instrumental and geophysical errors ([Gauthier et al., 2016](https://journals.ametsoc.org/view/journals/atot/33/1/jtech-d-15-0160_1.xml?tab_body=fulltext-display); [Peral and Esteban-Fernandez, 2018](https://ieeexplore.ieee.org/document/8517385/authors#authors)). In order to be able to observe front, mesoscale and sub-mesoscale features, the SWOT data will require specific processing. Also, these errors are expected to strongly pollute the first and second derivatives of the SSH data which are used for the computation of geostrophic currents and vorticity. Hence, being able to remove the SWOT errors will be of significant importance to recover information on 2D surface currents and vertical mixing.  
+The two-dimensional sea level SWOT products are very much expected to be a game changer in many oceanographic applications which will make them an unprecedented L3 product to be distributed. The row SWOT data will however be contaminated by instrumental and geophysical errors ([Gaultier et al., 2016](https://journals.ametsoc.org/view/journals/atot/33/1/jtech-d-15-0160_1.xml?tab_body=fulltext-display); [Peral and Esteban-Fernandez, 2018](https://ieeexplore.ieee.org/document/8517385/authors#authors)). In order to be able to observe front, mesoscale and sub-mesoscale features, the SWOT data will require specific processing. Also, these errors are expected to strongly pollute the first and second derivatives of the SSH data which are used for the computation of geostrophic currents and vorticity. Hence, being able to remove the SWOT errors will be of significant importance to recover information on 2D surface currents and vertical mixing.  
 
 The SWOT errors are expected to generate noises that are both correlated on the swath and spatially uncorrelated. Several past efforts have already investigated methods to remove or reduce the correlated noises from the SWOT data using prior knowledge on the ocean state (e.g. [Metref et al., 2019](https://www.mdpi.com/2072-4292/11/11/1336), see Figure 2.4.A), calibration from independent Nadir altimeter data (e.g. Febvre et al., 2021, see Figure 2.4.B) or cross-calibration from SWOT data themselves (on-going CNES-DUACS studies). And other efforts focused on reducing the uncorrelated data (Gomez-Navarro et al., [2018](https://www.mdpi.com/2072-4292/10/4/599), [2020](https://www.mdpi.com/2072-4292/12/4/734); Febvre et al., 2021). Yet, so far, no rigorous intercomparison between the recently developed methods has been undertaken and it seems difficult, to this day, to outline the benefits and limitations of favoring one error reduction method from another.
 
@@ -16,7 +16,7 @@ It is important to mention that the SWOT science requirement for uncorrelated no
 
 You can find another data challenge proposed by Datlas, CLS and IMT-Atlantique if you are interested in filtering only the instrumental (KaRIn) SWOT noise: [here](github.com/ocean-data-challenges/2022a_SWOT_karin_error_filtering).
 
-In practice, the SWOT error calibration data challenge is in the form of an Observing System Simulation Experiment (OSSE) in the Gulf Stream region considering a realistic ocean model simulation (NATL60) as the true ocean state. The SWOT simulator (Gauthier et al., 2016) was then used to create realistic SWOT data with and without correlated errors. Then, various calibration procedures can be tested and compared to the true ocean state.
+In practice, the SWOT error calibration data challenge is in the form of an Observing System Simulation Experiment (OSSE) in the Gulf Stream region considering a realistic ocean model simulation (NATL60) as the true ocean state. The SWOT simulator ([Gaultier et al., 2016](https://journals.ametsoc.org/view/journals/atot/33/1/jtech-d-15-0160_1.xml?tab_body=fulltext-display)) was then used to create realistic SWOT data with and without correlated errors. Then, various calibration procedures can be tested and compared to the true ocean state.
 
 This data challenge is partly funded by the CNRS, by the CNES and, as part of the **Sea Level Innovations and Collaborative Intercomparisons for the Next-Generation products (SLICING)** project, by the Copernicus Marine Service Evolution (21036-COP-INNO SCI).  
 
@@ -25,7 +25,7 @@ This data challenge is partly funded by the CNRS, by the CNES and, as part of th
 
 ### Experimental setup
 
-The data challenge is in the form of an Observing System Simulation Experiment (OSSE) considering a realistic ocean model simulation, the NEMO high resolution North Atlantic simulation **NATL60**, as the true ocean state in a 10°X10° degree box in the Gulf Stream region. The SWOT simulator ([Gauthier et al., 2016](https://journals.ametsoc.org/view/journals/atot/33/1/jtech-d-15-0160_1.xml?tab_body=fulltext-display)) was then used to create realistic SWOT data with and without instrumental noise. 
+The data challenge is in the form of an Observing System Simulation Experiment (OSSE) considering a realistic ocean model simulation, the NEMO high resolution North Atlantic simulation **NATL60**, as the true ocean state in a 10°X10° degree box in the Gulf Stream region. The SWOT simulator ([Gaultier et al., 2016](https://journals.ametsoc.org/view/journals/atot/33/1/jtech-d-15-0160_1.xml?tab_body=fulltext-display)) was then used to create realistic SWOT data with and without instrumental noise. 
 
 The experiment is performed over one SWOT orbital cycle (cycle 13) which contains 270 passes. All other cycles are available to tune or train the filters.
 
@@ -144,6 +144,14 @@ with:
 
  
 
+### Method descriptions
+
+#### Baseline
+
+#### CER method
+
+#### CalCNN
+
 
 ## Acknowledgement
 
@@ -153,3 +161,16 @@ The structure of this data challenge was to a large extent inspired by the [`oce
  
 
 
+
+## References
+ 
+ 
+Gaultier, L., Ubelmann, C., & Fu, L. L. (2016). The challenge of using future SWOT data for oceanic field reconstruction. Journal of Atmospheric and Oceanic Technology, 33(1), 119-126.
+
+Gómez-Navarro, L., Fablet, R., Mason, E., Pascual, A., Mourre, B., Cosme, E., & Le Sommer, J. (2018). SWOT spatial scales in the western Mediterranean sea derived from pseudo-observations and an Ad Hoc filtering. Remote Sensing, 10(4), 599.
+
+Gomez-Navarro, L., Cosme, E., Le Sommer, J., Papadakis, N., & Pascual, A. (2020). Development of an image de-noising method in preparation for the Surface Water and Ocean Topography satellite mission. Remote Sensing, 12(4).
+
+Metref, S., Cosme, E., Le Sommer, J., Poel, N., Brankart, J. M., Verron, J., & Gómez Navarro, L. (2019). Reduction of spatially structured errors in wide-swath altimetric satellite data using data assimilation. Remote Sensing, 11(11), 1336.
+
+Peral, E., & Esteban-Fernandez, D. (2018, July). SWOT mission performance and error budget. In IGARSS 2018-2018 IEEE International Geoscience and Remote Sensing Symposium (pp. 8625-8628). IEEE.
