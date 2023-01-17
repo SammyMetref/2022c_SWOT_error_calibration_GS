@@ -4,7 +4,8 @@ import sys
 import pyinterp
 import pyinterp.fill
 import matplotlib.pylab as plt
-from src.aux import *
+from src.aux_cer import *
+from src.aux_proj import *
 sys.path.append('..')  
 
 class SwotTrack(object):
@@ -378,6 +379,32 @@ class SwotTrack(object):
 
 
         ssha_calib = ensanagap
+
+        self.__enrich_dataset(outvar, ssha_calib)
+        
+        
+       
+    def apply_Projmethod_calib(self, invar, outvar):
+        """ apply Proj method calibration, enrich dataset inplace """
+        self.__check_var_exist(invar)
+        if outvar in self._dset.data_vars:
+            self._dset = self._dset.drop(outvar)
+        ssha = self.dset[invar].values
+        ssha_calib = np.zeros_like(ssha)+np.nan  
+        
+        ens_path='../inputs/dc_SWOTcalibGS_maps/dc_SWOTcalibGS_maps_20deg.nc'
+        ssh_map = interp_ens_to_track(ens_path,self,Nens=1,nselect=1)[0,:,:]
+
+        param0 = ['lin','alin','quad','aquad','cst','acst']
+        
+        ac1dparam0 = ac1d(param0)
+        
+        eta = ac1dparam0.invert_glo(self._dset.x_ac[0,:],ssha-ssh_map)
+         
+        hswath = ac1dparam0.eta2swath(eta,self._dset.x_ac[0,:])
+        
+        ssha_calib = ssha-hswath
+        
 
         self.__enrich_dataset(outvar, ssha_calib)
  
