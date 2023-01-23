@@ -384,8 +384,9 @@ class SwotTrack(object):
         
         
        
-    def apply_Projmethod_calib(self, invar, outvar):
+    def apply_Projmethod_calib(self, invar, outvar, filter_proj=False):
         """ apply Proj method calibration, enrich dataset inplace """
+        import numpy as np
         self.__check_var_exist(invar)
         if outvar in self._dset.data_vars:
             self._dset = self._dset.drop(outvar)
@@ -403,11 +404,40 @@ class SwotTrack(object):
          
         hswath = ac1dparam0.eta2swath(eta,self._dset.x_ac[0,:])
         
-        ssha_calib = ssha-hswath
+        if filter_proj: 
+            
+            # Filter requirements.
+            T = 553.0*2000         # Sample Period
+            fs = 2000       # sample rate, Hz
+            cutoff = 15      # desired cutoff frequency of the filter, Hz ,      slightly higher than actual 1.2 Hz
+            nyq = 0.5 * fs  # Nyquist Frequency
+            order = 5       # sin wave can be approx represented as quadratic
+            n = int(T * fs) # total number of samples
+
+            ssh_calib_lbf = np.zeros_like(hswath)
+            ssh_calib_hbf = np.zeros_like(hswath)
+            ssh_calib_bf = np.zeros_like(hswath)+hswath
+            for i in range(np.shape(hswath)[1]):
+ 
+
+                cutoff = 4   
+                ssh_calib_lbf[:,i] = butter_lowpass_filter(np.hstack((hswath[:,i],hswath[::-1,i])), cutoff, fs, order)[:np.shape(hswath)[0]]
+                cutoff = 50
+                ssh_calib_hbf[:,i] = butter_highpass_filter(np.hstack((hswath[:,i],hswath[::-1,i])), cutoff, fs,order)[:np.shape(hswath)[0]]
+
+
+            ssh_calib_bf = ssh_calib_lbf + ssh_calib_hbf
+
+            ssha_calib = ssha-ssh_calib_bf
+            
+        else: 
+        
+            ssha_calib = ssha-hswath
         
 
         self.__enrich_dataset(outvar, ssha_calib)
- 
+        
+
         
     def apply_ac_track_slope_calib(self, invar, outvar):
         """ apply ac track slope calibration, enrich dataset inplace """

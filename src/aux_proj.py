@@ -66,3 +66,26 @@ class ac1d():
             if sum(numpy.isnan(eta[:,it]))==0:
                 hswath[it,:] = self.operg(xac, eta=eta[:,it], return_geta=True, param=param)
         return hswath
+
+    
+
+from scipy.signal import butter,filtfilt
+
+
+def butter_lowpass_filter(data, cutoff, fs, order):
+    normal_cutoff = cutoff / nyq
+    # Get the filter coefficients 
+    b, a = butter(order, normal_cutoff, btype='low', analog=False)
+    y = filtfilt(b, a, data)
+    return y
+
+def butter_highpass(cutoff, fs, order=5):
+    nyq = 0.5 * fs
+    normal_cutoff = cutoff / nyq
+    b, a = butter(order, normal_cutoff, btype='high', analog=False)
+    return b, a
+
+def butter_highpass_filter(data, cutoff, fs, order=5):
+    b, a = butter_highpass(cutoff, fs, order=order)
+    y = filtfilt(b, a, data)
+    return y
