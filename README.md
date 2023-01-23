@@ -94,35 +94,47 @@ You're now good to go !
 
 The data are hosted on the opendap: [ocean-data-challenges/2022c_SWOT_error_calibration_GS/](https://ige-meom-opendap.univ-grenoble-alpes.fr/thredds/catalog/meomopendap/extract/ocean-data-challenges/2022c_SWOT_error_calibration_GS/catalog.html). 
 
-#### Inputs and targets data
+#### Inputs and targets data 
 
 The data needed for the DC are presented with the following directory structure:
 
 ```
 .
-|-- dc_input-output
-|   |-- dc_input-output_SWOTcalib_GS.nc
+|-- 2022c_SWOT_error_calibration_GS
+|   |-- dc_SWOTcalibGS_inputs.tar.gz
+|   |-- dc_SWOTcalibGS_nadirs.tar.gz
+|   |-- dc_SWOTcalibGS_maps.tar.gz
 
 ```
 
 
-To start out download the dataset from the temporary data server, use:
+To start out download the datasets from the data server:
 
+##### SWOT data (inputs and targets)
 ```shell
-!wget https://ige-meom-opendap.univ-grenoble-alpes.fr/thredds/fileServer/meomopendap/extract/ocean-data-challenges/2022c_SWOT_error_calibration_GS/dc_input-output/dc_input-output_SWOTcalib_GS.nc
+!wget https://ige-meom-opendap.univ-grenoble-alpes.fr/thredds/fileServer/meomopendap/extract/ocean-data-challenges/2022c_SWOT_error_calibration_GS/dc_SWOTcalibGS_inputs.tar.gz
 
 ```
 and then uncompress the files using `tar -xvf <file>.tar.gz`. You may also use `ftp`, `rsync` or `curl`to donwload the data.
 **The inputs are stored in the variable *ssh_err* and the targets are stored in the variable *ssh_true.**
 
-#### Extra training data
 
-If necessary a dataset for *training* purposes is available and can be downloaded using:
+#### Other potentially useful data (nadirs and maps)
+
+##### 5 nadirs data (for calibration if needed and evaluation on nadir tracks)
+```shell
+!wget https://ige-meom-opendap.univ-grenoble-alpes.fr/thredds/fileServer/meomopendap/extract/ocean-data-challenges/2022c_SWOT_error_calibration_GS/dc_SWOTcalibGS_nadirs.tar.gz
 
 ```
-. 
-|--  
-``` 
+
+##### Maps data: OI maps made from the 5 nadirs data (for calibration if needed)
+```shell
+!wget https://ige-meom-opendap.univ-grenoble-alpes.fr/thredds/fileServer/meomopendap/extract/ocean-data-challenges/2022c_SWOT_error_calibration_GS/dc_SWOTcalibGS_maps.tar.gz
+
+```
+and then uncompress the files using `tar -xvf <file>.tar.gz`. You may also use `ftp`, `rsync` or `curl`to donwload the data. 
+
+ 
 
 
 
