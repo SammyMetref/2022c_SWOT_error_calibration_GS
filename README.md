@@ -115,7 +115,8 @@ To start out download the datasets from the data server.
 
 ```
 and then uncompress the files using `tar -xvf <file>.tar.gz`. You may also use `ftp`, `rsync` or `curl`to donwload the data.
-**The inputs are stored in the variable *ssh_err* and the targets are stored in the variable *ssh_true.**
+
+**The inputs are stored in the variable *ssh_err* and the targets are stored in the variable *ssh_true*.**
 
 
 #### Other potentially useful data (nadirs and maps)
