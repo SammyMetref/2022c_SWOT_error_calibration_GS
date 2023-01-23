@@ -59,7 +59,7 @@ A comparison notebook, [compare_evaluations_onswot](https://github.com/SammyMetr
 
 #### Evaluation on Nadirs tracks
 
-The second evaluation of the calibration methods is based on the comparison of the true SWOT data interpolated on Nadir tracks. It also includes two scores, one based on the Root-Mean-Square Error (RMSE), the other a noise-to-signal ratio based on a one-dimensional (along Nadir tracks) Fourier wavenumber spectra. The evaluation notebook [demo_evaluate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluate_onnadirs_baseline.ipynb) implements the computation of these two scores for the baseline as they appear in the second leaderboard. 
+The second evaluation of the calibration methods is based on the comparison of the true SWOT data interpolated on Nadir tracks. It also includes two scores, one based on the Root-Mean-Square Error (RMSE), the other a noise-to-signal ratio based on a one-dimensional (along Nadir tracks crossing the swath) Fourier wavenumber spectra. The evaluation notebook [demo_evaluate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluate_onnadirs_baseline.ipynb) implements the computation of these two scores for the baseline as they appear in the second leaderboard. 
 
 
 ## 3. To get started
@@ -152,7 +152,7 @@ If necessary a dataset for *training* purposes is available and can be downloade
 
 with:
 
- `µ(RMSE)`: averaged root-mean square error over the swaths 
+ `µ(RMSE)`: averaged root-mean square error over the tracks crossing the swath, 
  
  `λ(SNR1)`: spatial wavelength where SNR=0.5.
  
