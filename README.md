@@ -93,8 +93,7 @@ You're now good to go !
 ### Download the data
 
 The data are hosted on the opendap: [ocean-data-challenges/2022c_SWOT_error_calibration_GS/](https://ige-meom-opendap.univ-grenoble-alpes.fr/thredds/catalog/meomopendap/extract/ocean-data-challenges/2022c_SWOT_error_calibration_GS/catalog.html). 
-
-#### Inputs and targets data 
+ 
 
 The data needed for the DC are presented with the following directory structure:
 
@@ -108,9 +107,9 @@ The data needed for the DC are presented with the following directory structure:
 ```
 
 
-To start out download the datasets from the data server:
+To start out download the datasets from the data server.
 
-##### SWOT data (inputs and targets)
+#### SWOT data (inputs and targets)
 ```shell
 !wget https://ige-meom-opendap.univ-grenoble-alpes.fr/thredds/fileServer/meomopendap/extract/ocean-data-challenges/2022c_SWOT_error_calibration_GS/dc_SWOTcalibGS_inputs.tar.gz
 
