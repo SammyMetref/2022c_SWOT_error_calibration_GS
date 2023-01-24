@@ -259,8 +259,8 @@ with:
 
 | Method   | Field                          |   µ(RMSE) |    λ(SNR1) [km] | Reference                  |
 |:---------|--------:|-----------------:|-------------------------------:|:---------------------------| 
-| **Ref (True SWOT)**  | Sea Surface Height $[m]$|     0.014  |    15.561  |  --- |  
-| **No Calib**   | Sea Surface Height $[m]$|    4.041   |    NaN  |  --- |  
+| **Ref (True SWOT)**  | Sea Surface Height $[m]$|     0.014  |    15.561  |  [demo_evaluation_onnadirs_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onnadirs_baseline.ipynb) |  
+| **No Calib**   | Sea Surface Height $[m]$|    4.041   |    NaN  |  [demo_evaluation_onnadirs_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onnadirs_baseline.ipynb) |  
 | **Baseline**   | Sea Surface Height $[m]$|        0.218 |   30.270 |  [demo_evaluation_onnadirs_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onnadirs_baseline.ipynb) |  
 | **CER-method**   | Sea Surface Height $[m]$|        0.074 |   **23.800**   |  [evaluation_onnadirs_CERmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/evaluation_onnadirs_CERmethod.ipynb) |  
 | **Projmethod**   | Sea Surface Height $[m]$|        **0.037** |  25.647  |  [evaluation_onnadirs_Projmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/evaluation_onnadirs_Projmethod.ipynb) |  
