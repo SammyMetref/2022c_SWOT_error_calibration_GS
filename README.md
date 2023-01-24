@@ -187,6 +187,8 @@ and then uncompress the files using `tar -xvf <file>.tar.gz`. You may also use `
 
 See the **Baseline** section above. 
 
+Notebook available: [demo_generate_baseline.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/demo_generate_baseline.ipynb)
+
 #### CER method
 
 The CER method is based on [Metref et al. (2019)](https://www.mdpi.com/2072-4292/11/11/1336). The CER method algorithm is included in src/aux.py and launched in src/swot.py with the function `apply_CERmethod_calib`.
@@ -197,12 +199,16 @@ The ensemble is projected onto the SWOT swath and both the SWOT data and the pro
 Using the projected ensemble, the detrended ensemble and the detrended SWOT data, an assimilation analysis is performed (using an Ensemble Transform Kalman Filter). 
 The ensemble average of this analysis constitutes the calibrated SWOT data. 
 
+Notebook available: [generate_CERmethod_calibration.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_CERmethod_calibration.ipynb)
+
 
 
 #### Projection method
 
 The projection method is very similar to the CER method. The projection method interpolates the SSH map created with the OI method and 5 nadirs (see CER method) onto the SWOT track. The difference between the SWOT with error data and the interpolated SSH map is then "projected", i.e., using a min square method the signal in this difference that has the same geometry as the expected SWOT errors (linear across track for the roll error, quadratic for the baseline dilation error ...). The residual is then added back onto the interpolated OI SSH map (containing mostly larger scales). 
 A low-pass and high-pass filter is also performed so to leave untouch the mesoscale that is already accurate in the OI SSH map and that can be wrongly projected onto the error geometry. 
+
+Notebook available: [generate_Projmethod_calibration.ipynb](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_Projmethod_calibration.ipynb)
 
 #### CalCNN
 
@@ -216,6 +222,7 @@ An input convolution layer is used to change the number of channels. The data is
 Then a last convolution layer is used to compute a point wise correction of the L4 product from the different channels. 
 Finally this correction is added to the input interpolated field to produce the calibrated SWOT data.
 
+No notebook available. The method was generated offline. 
 
 <a name="sec42"></a> 
 ### 4.2 Evaluation on SWOT swath: Leaderboard
@@ -225,18 +232,18 @@ Finally this correction is added to the input interpolated field to produce the 
 | **No Calib**   | Sea Surface Height $[m]$|        3.395 |         116.3  |  --- |  
 | ---   | Geos. current $[m.s^{-1}]$|        9.437 |         nan  |  --- |  
 | ---   | Relative vorticity $[]$|        0.760 |         37.9  |  --- | 
-| **Baseline**   | Sea Surface Height $[m]$|        0.145 |         83.9  |  [demo_generate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/demo_generate_baseline.ipynb) |  
-| ---   | Geos. current $[m.s^{-1}]$|        0.288 |         84.9  |  [demo_generate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/demo_generate_baseline.ipynb) |  
-| ---   | Relative vorticity $[]$|        0.529 |         36.5  |  [demo_generate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/demo_generate_baseline.ipynb) | 
-| **CER-method**   | Sea Surface Height $[m]$|        0.074 |        **4.2**  |  [generate_CERmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_CERmethod_calibration.ipynb) |  
-| ---   | Geos. current $[m.s^{-1}]$|        0.219 |         78.4  |  [generate_CERmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_CERmethod_calibration.ipynb) |  
-| ---   | Relative vorticity $[]$|        0.261 |         103.4  |  [generate_CERmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_CERmethod_calibration.ipynb) | 
-| **Projmethod**   | Sea Surface Height $[m]$|        0.037 |        **4.2**  |  [generate_Projmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_Projmethod_calibration.ipynb) |  
-| ---   | Geos. current $[m.s^{-1}]$|        0.115 |      40.2 |  [generate_Projmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_Projmethod_calibration.ipynb) |  
-| ---   | Relative vorticity $[]$|        0.271 |        **30.6**  |  [generate_Projmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_Projmethod_calibration.ipynb) | 
-| **CalCNN**   | Sea Surface Height $[m]$|        **0.014** |         **4.2**  |  Offline generation |  
-| ---   | Geos. current $[m.s^{-1}]$|        **0.076** |         **30.6**  | Offline generation    |  
-| ---   | Relative vorticity $[]$|        **0.212** |         37.9  | Offline generation | 
+| **Baseline**   | Sea Surface Height $[m]$|        0.145 |         83.9  |  [demo_evaluate_onswot_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/demo_evaluate_onswot_baseline.ipynb) |  
+| ---   | Geos. current $[m.s^{-1}]$|        0.288 |         84.9  |  [demo_generate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/demo_evaluate_onswot_baseline.ipynb) |  
+| ---   | Relative vorticity $[]$|        0.529 |         36.5  |  [demo_generate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/demo_evaluate_onswot_baseline.ipynb) | 
+| **CER-method**   | Sea Surface Height $[m]$|        0.074 |        **4.2**  |  [evaluate_onswot_CERmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/evaluate_onswot_CERmethod.ipynb) |  
+| ---   | Geos. current $[m.s^{-1}]$|        0.219 |         78.4  |  [evaluate_onswot_CERmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/evaluate_onswot_CERmethod.ipynb) |  
+| ---   | Relative vorticity $[]$|        0.261 |         103.4  |  [evaluate_onswot_CERmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/evaluate_onswot_CERmethod.ipynb) | 
+| **Projmethod**   | Sea Surface Height $[m]$|        0.037 |        **4.2**  |  [evaluate_onswot_Projmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/evaluate_onswot_Projmethod.ipynb) |  
+| ---   | Geos. current $[m.s^{-1}]$|        0.115 |      40.2 |  [evaluate_onswot_Projmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/evaluate_onswot_Projmethod.ipynb) |  
+| ---   | Relative vorticity $[]$|        0.271 |        **30.6**  |  [evaluate_onswot_Projmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/evaluate_onswot_Projmethod.ipynb) | 
+| **CalCNN**   | Sea Surface Height $[m]$|        **0.014** |         **4.2**  |  [evaluate_onswot_CalCNNmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/evaluate_onswot_CalCNNmethod.ipynb) |  
+| ---   | Geos. current $[m.s^{-1}]$|        **0.076** |         **30.6**  | [evaluate_onswot_CalCNNmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/evaluate_onswot_CalCNNmethod.ipynb)    |  
+| ---   | Relative vorticity $[]$|        **0.212** |         37.9  | [evaluate_onswot_CalCNNmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/evaluate_onswot_CalCNNmethod.ipynb) | 
 
   
 
@@ -254,10 +261,10 @@ with:
 |:---------|--------:|-----------------:|-------------------------------:|:---------------------------| 
 | **Ref (True SWOT)**  | Sea Surface Height $[m]$|     0.014  |    15.561  |  --- |  
 | **No Calib**   | Sea Surface Height $[m]$|    4.041   |    NaN  |  --- |  
-| **Baseline**   | Sea Surface Height $[m]$|        0.218 |   30.270 |  [demo_generate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/demo_generate_baseline.ipynb) |  
-| **CER-method**   | Sea Surface Height $[m]$|        0.074 |   **23.800**   |  [generate_CERmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_CERmethod_calibration.ipynb) |  
-| **Projmethod**   | Sea Surface Height $[m]$|        **0.037** |  25.647  |  [generate_Projmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_Projmethod_calibration.ipynb) |  
-| **CalCNN**   | Sea Surface Height $[m]$|        --- |        ---  |  Offline generation |  
+| **Baseline**   | Sea Surface Height $[m]$|        0.218 |   30.270 |  [demo_evaluation_onnadirs_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onnadirs_baseline.ipynb) |  
+| **CER-method**   | Sea Surface Height $[m]$|        0.074 |   **23.800**   |  [evaluation_onnadirs_CERmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/evaluation_onnadirs_CERmethod.ipynb) |  
+| **Projmethod**   | Sea Surface Height $[m]$|        **0.037** |  25.647  |  [evaluation_onnadirs_Projmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/evaluation_onnadirs_Projmethod.ipynb) |  
+| **CalCNN**   | Sea Surface Height $[m]$|        --- |        ---  |  --- |  
 
  
 
