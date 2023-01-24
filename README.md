@@ -34,11 +34,13 @@ A challenge on the SWOT satellite error calibration organised by Datlas, IGE, IM
 
 [**References**](#references)
 
-<span style="color:blue">some *blue* text</span>.
-
-<span style="background:blue">other *blue* text</span>.
-
-<p>Some Markdown text with <span style="color:blue">some <em>blue</em> text</span>.</p>
+```diff
+- text in red
++ text in green
+! text in orange
+# text in gray
+@@ text in purple (and bold)@@
+```
 
 
 <a name="contextmotivation"></a>
