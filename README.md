@@ -7,22 +7,22 @@ A challenge on the SWOT satellite error calibration organised by Datlas, IGE, IM
 ## Plan 
 
 1. [Context & Motivation](#contextmotivation)
-2. The experiment 
+2. [The experiment](#theexperiment)
 - 2.1 Experimental setup
 - 2.2 Baseline
 - 2.3 Evaluations
-3. To get started 
+3. [To get started](#togetstarted) 
 - 3.1 Installation
 - 3.2 Download the data
-4. To compare 
+4. [To compare](#tocompare)
 - 4.1 Method descriptions
 - 4.2 Evaluation on SWOT swath: Leaderboard
 - 4.3 Evaluation on Nadirs tracks: Leaderboard
 Acknowledgement
 References
 
-
-## 1. Context & Motivation<a name="contextmotivation"></a>
+<a name="contextmotivation"></a>
+## 1. Context & Motivation
 
 The two-dimensional sea level SWOT products are very much expected to be a game changer in many oceanographic applications which will make them an unprecedented L3 product to be distributed. The row SWOT data will however be contaminated by instrumental and geophysical errors ([Gaultier et al., 2016](https://journals.ametsoc.org/view/journals/atot/33/1/jtech-d-15-0160_1.xml?tab_body=fulltext-display); [Peral and Esteban-Fernandez, 2018](https://ieeexplore.ieee.org/document/8517385/authors#authors)). In order to be able to observe front, mesoscale and sub-mesoscale features, the SWOT data will require specific processing. Also, these errors are expected to strongly pollute the first and second derivatives of the SSH data which are used for the computation of geostrophic currents and vorticity. Hence, being able to remove the SWOT errors will be of significant importance to recover information on 2D surface currents and vertical mixing.  
 
@@ -38,7 +38,7 @@ In practice, the SWOT error calibration data challenge is in the form of an Obse
 
 This data challenge is partly funded by the CNRS, by the CNES and, as part of the **Sea Level Innovations and Collaborative Intercomparisons for the Next-Generation products (SLICING)** project, by the Copernicus Marine Service Evolution (21036-COP-INNO SCI).  
 
-
+<a name="theexperiment"></a> 
 ## 2. The experiment
 
 ### 2.1 Experimental setup
@@ -80,6 +80,7 @@ A comparison notebook, [compare_evaluations_onswot](https://github.com/SammyMetr
 The second evaluation of the calibration methods is based on the comparison of the true SWOT data interpolated on Nadir tracks. It also includes two scores, one based on the Root-Mean-Square Error (RMSE), the other a noise-to-signal ratio based on a one-dimensional (along Nadir tracks crossing the swath) Fourier wavenumber spectra. The evaluation notebook [demo_evaluate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluate_onnadirs_baseline.ipynb) implements the computation of these two scores for the baseline as they appear in the second leaderboard. 
 
 
+<a name="togetstarted"></a>
 ## 3. To get started
 
 ### 3.1 Installation
@@ -155,6 +156,7 @@ and then uncompress the files using `tar -xvf <file>.tar.gz`. You may also use `
 
 
 
+<a name="tocompare"></a>
 ## 4. To compare 
 
 
