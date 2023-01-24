@@ -6,7 +6,7 @@ A challenge on the SWOT satellite error calibration organised by Datlas, IGE, IM
 
 ## Plan 
 
-- 1. Context & Motivation 
+- [1. Context & Motivation] 
 - 2. The experiment 
     - 2.1 Experimental setup
     - 2.2 Baseline
