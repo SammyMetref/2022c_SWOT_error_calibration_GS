@@ -233,8 +233,8 @@ No notebook available. The method was generated offline.
 | ---   | Geos. current $[m.s^{-1}]$|        9.437 |         nan  |  --- |  
 | ---   | Relative vorticity $[]$|        0.760 |         37.9  |  --- | 
 | **Baseline**   | Sea Surface Height $[m]$|        0.145 |         83.9  |  [demo_evaluate_onswot_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/demo_evaluate_onswot_baseline.ipynb) |  
-| ---   | Geos. current $[m.s^{-1}]$|        0.288 |         84.9  |  [demo_generate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/demo_evaluate_onswot_baseline.ipynb) |  
-| ---   | Relative vorticity $[]$|        0.529 |         36.5  |  [demo_generate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/demo_evaluate_onswot_baseline.ipynb) | 
+| ---   | Geos. current $[m.s^{-1}]$|        0.288 |         84.9  |  [demo_evaluate_onswot_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/demo_evaluate_onswot_baseline.ipynb) |  
+| ---   | Relative vorticity $[]$|        0.529 |         36.5  |  [demo_evaluate_onswot_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/demo_evaluate_onswot_baseline.ipynb) | 
 | **CER-method**   | Sea Surface Height $[m]$|        0.074 |        **4.2**  |  [evaluate_onswot_CERmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/evaluate_onswot_CERmethod.ipynb) |  
 | ---   | Geos. current $[m.s^{-1}]$|        0.219 |         78.4  |  [evaluate_onswot_CERmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/evaluate_onswot_CERmethod.ipynb) |  
 | ---   | Relative vorticity $[]$|        0.261 |         103.4  |  [evaluate_onswot_CERmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/evaluate_onswot_CERmethod.ipynb) | 
