@@ -5,10 +5,8 @@ A challenge on the SWOT satellite error calibration organised by Datlas, IGE, IM
 <img src="figures/DC_SWOT_error_calibratio _GS-banner.png" />
 
 ## Content 
-
-<div style="background-color:rgba(0, 0, 0, 0.0470588);"> 
-[**1. Context & Motivation**](#contextmotivation)
-</div>
+ 
+[**1. Context & Motivation**](#contextmotivation) 
 
 [**2. The experiment**](#theexperiment)
 
@@ -36,6 +34,9 @@ A challenge on the SWOT satellite error calibration organised by Datlas, IGE, IM
 
 [**References**](#references)
 
+<span style="color:blue">some *blue* text</span>.
+
+<span style="background:blue">other *blue* text</span>.
 
 
 <a name="contextmotivation"></a>
