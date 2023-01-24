@@ -6,7 +6,7 @@ A challenge on the SWOT satellite error calibration organised by Datlas, IGE, IM
 
 ## Content 
 
-<div style="background-color:rgba(0, 0, 0, 0.0470588); text-align:center; vertical-align: middle; padding:40px 0;"> 
+<div style="background-color:rgba(0, 0, 0, 0.0470588);"> 
 [**1. Context & Motivation**](#contextmotivation)
 </div>
 
