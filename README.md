@@ -38,6 +38,8 @@ A challenge on the SWOT satellite error calibration organised by Datlas, IGE, IM
 
 <span style="background:blue">other *blue* text</span>.
 
+<p>Some Markdown text with <span style="color:blue">some <em>blue</em> text</span>.</p>
+
 
 <a name="contextmotivation"></a>
 ## 1. Context & Motivation
