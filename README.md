@@ -10,7 +10,7 @@ A challenge on the SWOT satellite error calibration organised by Datlas, IGE, IM
 
 [2. The experiment](#theexperiment)
 
-nbsp [2.1 Experimental setup](#sec21)
+&nbsp; [2.1 Experimental setup](#sec21)
     
    [2.2 Baseline](#sec23)
     
