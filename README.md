@@ -4,8 +4,9 @@ A challenge on the SWOT satellite error calibration organised by Datlas, IGE, IM
 
 <img src="figures/DC_SWOT_error_calibratio _GS-banner.png" />
 
-<span style="background-color:green"> 
 ## Content 
+
+<span style="background-color:green"> 
 
 [**1. Context & Motivation**](#contextmotivation)
 
