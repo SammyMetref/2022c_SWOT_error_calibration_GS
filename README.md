@@ -6,8 +6,8 @@ A challenge on the SWOT satellite error calibration organised by Datlas, IGE, IM
 
 ## Content 
 
-<span style="background-color:green"> 
-
+<div class="alert alert-block alert-success">
+<h1><center>  
 [**1. Context & Motivation**](#contextmotivation)
 
 [**2. The experiment**](#theexperiment)
@@ -35,7 +35,7 @@ A challenge on the SWOT satellite error calibration organised by Datlas, IGE, IM
 [**Acknowledgement**](#acknowledgement)
 
 [**References**](#references)
-</span>
+</center></h1></div>
 
 
 <a name="contextmotivation"></a>
