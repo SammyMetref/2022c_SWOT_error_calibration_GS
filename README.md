@@ -6,20 +6,23 @@ A challenge on the SWOT satellite error calibration organised by Datlas, IGE, IM
 
 ## Plan 
 
-[1. Context & Motivation](#contextmotivation)
+[**1. Context & Motivation**](#contextmotivation)
 
-[2. The experiment](#theexperiment)
-&ensp; [2.1 Experimental setup](#sec21) 
-&ensp; [2.2 Baseline](#sec23) 
+[**2. The experiment**](#theexperiment)
+
+&ensp; [2.1 Experimental setup](#sec21)
+    
+&ensp; [2.2 Baseline](#sec23)
+    
 &ensp; [2.3 Evaluations](#sec23)
     
-[3. To get started](#togetstarted) 
+[**3. To get started**](#togetstarted) 
 
 &ensp; [3.1 Installation](#sec31)
     
 &ensp; [3.2 Download the data](#sec32)
    
-[4.To compare](#tocompare)
+[**4.To compare**](#tocompare)
 
 &ensp; [4.1 Method descriptions](#sec41)
     
@@ -27,9 +30,9 @@ A challenge on the SWOT satellite error calibration organised by Datlas, IGE, IM
     
 &ensp; [4.3 Evaluation on Nadirs tracks: Leaderboard](#sec43)
      
-[Acknowledgement](#acknowledgement)
+[**Acknowledgement**](#acknowledgement)
 
-[References](#references)
+[**References**](#references)
 
 
 <a name="contextmotivation"></a>
