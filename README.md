@@ -6,23 +6,23 @@ A challenge on the SWOT satellite error calibration organised by Datlas, IGE, IM
 
 ## Plan 
 
-- **1. Context & Motivation** 
-- 2. The experiment 
-    - 2.1 Experimental setup
-    - 2.2 Baseline
-    - 2.3 Evaluations
-- 3. To get started 
-    - 3.1 Installation
-    - 3.2 Download the data
-- 4. To compare 
-    - 4.1 Method descriptions
-    - 4.2 Evaluation on SWOT swath: Leaderboard
-    - 4.3 Evaluation on Nadirs tracks: Leaderboard
-- Acknowledgement
-- References
+1. [Context & Motivation](#contextmotivation)
+2. The experiment 
+- 2.1 Experimental setup
+- 2.2 Baseline
+- 2.3 Evaluations
+3. To get started 
+- 3.1 Installation
+- 3.2 Download the data
+4. To compare 
+- 4.1 Method descriptions
+- 4.2 Evaluation on SWOT swath: Leaderboard
+- 4.3 Evaluation on Nadirs tracks: Leaderboard
+Acknowledgement
+References
 
 
-## 1. Context & Motivation
+## 1. Context & Motivation<a name="contextmotivation"></a>
 
 The two-dimensional sea level SWOT products are very much expected to be a game changer in many oceanographic applications which will make them an unprecedented L3 product to be distributed. The row SWOT data will however be contaminated by instrumental and geophysical errors ([Gaultier et al., 2016](https://journals.ametsoc.org/view/journals/atot/33/1/jtech-d-15-0160_1.xml?tab_body=fulltext-display); [Peral and Esteban-Fernandez, 2018](https://ieeexplore.ieee.org/document/8517385/authors#authors)). In order to be able to observe front, mesoscale and sub-mesoscale features, the SWOT data will require specific processing. Also, these errors are expected to strongly pollute the first and second derivatives of the SSH data which are used for the computation of geostrophic currents and vorticity. Hence, being able to remove the SWOT errors will be of significant importance to recover information on 2D surface currents and vertical mixing.  
 
