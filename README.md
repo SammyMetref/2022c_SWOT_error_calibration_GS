@@ -7,19 +7,32 @@ A challenge on the SWOT satellite error calibration organised by Datlas, IGE, IM
 ## Plan 
 
 [1. Context & Motivation](#contextmotivation)
+
 [2. The experiment](#theexperiment)
-    [2.1 Experimental setup](#sec21)
-    [2.2 Baseline](#sec23)
-    [2.3 Evaluations](#sec23)
+
+   [2.1 Experimental setup](#sec21)
+    
+   [2.2 Baseline](#sec23)
+    
+   [2.3 Evaluations](#sec23)
+    
 [3. To get started](#togetstarted) 
-    [3.1 Installation](#sec31)
-    [3.2 Download the data](#sec32)
+
+   [3.1 Installation](#sec31)
+    
+   [3.2 Download the data](#sec32)
+   
 [4.To compare](#tocompare)
-    [4.1 Method descriptions](#sec41)
-    [4.2 Evaluation on SWOT swath: Leaderboard](#sec42)
-    [4.3 Evaluation on Nadirs tracks: Leaderboard](#sec43)
-Acknowledgement
-References
+
+   [4.1 Method descriptions](#sec41)
+    
+   [4.2 Evaluation on SWOT swath: Leaderboard](#sec42)
+    
+   [4.3 Evaluation on Nadirs tracks: Leaderboard](#sec43)
+     
+[Acknowledgement](#acknowledgement)
+[References](#references)
+
 
 <a name="contextmotivation"></a>
 ## 1. Context & Motivation
@@ -253,6 +266,7 @@ with:
  `λ(SNR1)`: spatial wavelength where SNR=0.5.
 
  
+<a name="acknowledgement"></a>
 ## Acknowledgement
 
 This data challenge was funded by the CNRS, by the CNES and by the Service Evolution CMEMS project: SLICING, in collaboration with Datlas, IGE, CLS, IMT-Atlantique.
@@ -262,6 +276,7 @@ The structure of this data challenge was to a large extent inspired by the [`oce
 
 
 
+<a name="references"></a>
 ## References
  
  
