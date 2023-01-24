@@ -4,6 +4,24 @@ A challenge on the SWOT satellite error calibration organised by Datlas, IGE, IM
 
 <img src="figures/DC_SWOT_error_calibratio _GS-banner.png" />
 
+## Plan 
+
+- 1. Context & Motivation 
+- 2. The experiment 
+    - 2.1 Experimental setup
+    - 2.2 Baseline
+    - 2.3 Evaluations
+- 3. To get started 
+    - 3.1 Installation
+    - 3.2 Download the data
+- 4. To compare 
+    - 4.1 Method descriptions
+    - 4.2 Evaluation on SWOT swath: Leaderboard
+    - 4.3 Evaluation on Nadirs tracks: Leaderboard
+- Acknowledgement
+- References
+
+
 ## 1. Context & Motivation
 
 The two-dimensional sea level SWOT products are very much expected to be a game changer in many oceanographic applications which will make them an unprecedented L3 product to be distributed. The row SWOT data will however be contaminated by instrumental and geophysical errors ([Gaultier et al., 2016](https://journals.ametsoc.org/view/journals/atot/33/1/jtech-d-15-0160_1.xml?tab_body=fulltext-display); [Peral and Esteban-Fernandez, 2018](https://ieeexplore.ieee.org/document/8517385/authors#authors)). In order to be able to observe front, mesoscale and sub-mesoscale features, the SWOT data will require specific processing. Also, these errors are expected to strongly pollute the first and second derivatives of the SSH data which are used for the computation of geostrophic currents and vorticity. Hence, being able to remove the SWOT errors will be of significant importance to recover information on 2D surface currents and vertical mixing.  
@@ -23,7 +41,7 @@ This data challenge is partly funded by the CNRS, by the CNES and, as part of th
 
 ## 2. The experiment
 
-### Experimental setup
+### 2.1 Experimental setup
 
 The data challenge is in the form of an Observing System Simulation Experiment (OSSE) considering a realistic ocean model simulation, the NEMO high resolution North Atlantic simulation **NATL60**, as the true ocean state in a 10°X10° degree box in the Gulf Stream region. The SWOT simulator ([Gaultier et al., 2016](https://journals.ametsoc.org/view/journals/atot/33/1/jtech-d-15-0160_1.xml?tab_body=fulltext-display)) was then used to create realistic SWOT data with and without instrumental noise. 
 
@@ -37,13 +55,13 @@ In no way the targets that are available during the evaluation period should be 
 <center><em>Fig.: Example of one target of the data challenge: SWOT data without errors (left), one input of the data challenge: SWOT data with errors (center) and the difference between the two (right). Here, SWOT is "flying" over the NATL60 model simulation in the Gulf Stream region.
 </em></center>
 
-### Baseline 
+### 2.2 Baseline 
 
 The baseline method is a very simple and straightforward method that removes the averaged on the pass of a linear trend across track. This is supposed to remove all the signal that has the same structure as the roll error (if the roll error was constant over the region). This method is flowed since (1) there are other errors, (2) the roll error is not constant over the region and (3) the method also removes signals that happens to have a linear structure across track but is actual SSH. 
 The baseline is performed in the notebook [demo_generate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/demo_generate_baseline.ipynb).
 
 
-### Evaluation
+### 2.3 Evaluations
 
 There are two ways of evaluating the calibration performance. Since the experiment is an OSSE, we do have the true SSH on the SWOT swath. Hence the first possible evaluation is directly on the SWOT swath where the calibrated SWOT data are compared to the true SWOT data. The second evaluation is performed using OSE-type metrics, i.e. as if the true data on the swath wasn't available. In this case, the calibrated SWOT data are interpolated onto some Nadir tracks (envisat, geosat2, jason1 and topex-poseidon) and then compared to the true SWOT data (also interpolated on the Nadir tracks).  
 
@@ -64,7 +82,7 @@ The second evaluation of the calibration methods is based on the comparison of t
 
 ## 3. To get started
 
-### Installation
+### 3.1 Installation
 :computer: _**How to get started ?**_
 
 Clone the data challenge repo: 
@@ -90,7 +108,7 @@ You're now good to go !
 [Check out the quickstart](quickstart.ipynb)
 
 
-### Download the data
+### 3.2 Download the data
 
 The data are hosted on the opendap: [ocean-data-challenges/2022c_SWOT_error_calibration_GS/](https://ige-meom-opendap.univ-grenoble-alpes.fr/thredds/catalog/meomopendap/extract/ocean-data-challenges/2022c_SWOT_error_calibration_GS/catalog.html). 
  
@@ -139,57 +157,8 @@ and then uncompress the files using `tar -xvf <file>.tar.gz`. You may also use `
 
 ## 4. To compare 
 
-### Leaderboard: evaluation on SWOT swath
 
-| Method   | Field                          |   µ(RMSE) |    λ(SNR1) [km] | Reference                  |
-|:---------|--------:|-----------------:|-------------------------------:|:---------------------------|
-| **No Calib**   | Sea Surface Height $[m]$|        3.395 |         116.3  |  --- |  
-| ---   | Geos. current $[m.s^{-1}]$|        9.437 |         nan  |  --- |  
-| ---   | Relative vorticity $[]$|        0.760 |         37.9  |  --- | 
-| **Baseline**   | Sea Surface Height $[m]$|        0.145 |         83.9  |  [demo_generate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/demo_generate_baseline.ipynb) |  
-| ---   | Geos. current $[m.s^{-1}]$|        0.288 |         84.9  |  [demo_generate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/demo_generate_baseline.ipynb) |  
-| ---   | Relative vorticity $[]$|        0.529 |         36.5  |  [demo_generate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/demo_generate_baseline.ipynb) | 
-| **CER-method**   | Sea Surface Height $[m]$|        0.074 |        **4.2**  |  [generate_CERmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_CERmethod_calibration.ipynb) |  
-| ---   | Geos. current $[m.s^{-1}]$|        0.219 |         78.4  |  [generate_CERmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_CERmethod_calibration.ipynb) |  
-| ---   | Relative vorticity $[]$|        0.261 |         103.4  |  [generate_CERmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_CERmethod_calibration.ipynb) | 
-| **Projmethod**   | Sea Surface Height $[m]$|        0.037 |        **4.2**  |  [generate_Projmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_Projmethod_calibration.ipynb) |  
-| ---   | Geos. current $[m.s^{-1}]$|        0.115 |      40.2 |  [generate_Projmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_Projmethod_calibration.ipynb) |  
-| ---   | Relative vorticity $[]$|        0.271 |        **30.6**  |  [generate_Projmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_Projmethod_calibration.ipynb) | 
-| **CalCNN**   | Sea Surface Height $[m]$|        **0.014** |         **4.2**  |  Offline generation |  
-| ---   | Geos. current $[m.s^{-1}]$|        **0.076** |         **30.6**  | Offline generation    |  
-| ---   | Relative vorticity $[]$|        **0.212** |         37.9  | Offline generation | 
-
-  
-
-with:
-
- `µ(RMSE)`: averaged root-mean square error over the tracks crossing the swath, 
- 
- `λ(SNR1)`: spatial wavelength where SNR=0.5.
- 
-
-### Leaderboard: evaluation on Nadirs tracks
-
-| Method   | Field                          |   µ(RMSE) |    λ(SNR1) [km] | Reference                  |
-|:---------|--------:|-----------------:|-------------------------------:|:---------------------------| 
-| **Ref (True SWOT)**  | Sea Surface Height $[m]$|     0.014  |    15.561  |  --- |  
-| **No Calib**   | Sea Surface Height $[m]$|    4.041   |    NaN  |  --- |  
-| **Baseline**   | Sea Surface Height $[m]$|        0.218 |   30.270 |  [demo_generate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/demo_generate_baseline.ipynb) |  
-| **CER-method**   | Sea Surface Height $[m]$|        0.074 |   **23.800**   |  [generate_CERmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_CERmethod_calibration.ipynb) |  
-| **Projmethod**   | Sea Surface Height $[m]$|        **0.037** |  25.647  |  [generate_Projmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_Projmethod_calibration.ipynb) |  
-| **CalCNN**   | Sea Surface Height $[m]$|        --- |        ---  |  Offline generation |  
-
- 
-
-with:
-
- `µ(RMSE)`: averaged root-mean square error over the swaths 
- 
- `λ(SNR1)`: spatial wavelength where SNR=0.5.
-
- 
-
-### Method descriptions
+### 4.1 Method descriptions
 
 #### Baseline
 
@@ -225,6 +194,56 @@ Then a last convolution layer is used to compute a point wise correction of the 
 Finally this correction is added to the input interpolated field to produce the calibrated SWOT data.
 
 
+
+### 4.2 Evaluation on SWOT swath: Leaderboard
+
+| Method   | Field                          |   µ(RMSE) |    λ(SNR1) [km] | Reference                  |
+|:---------|--------:|-----------------:|-------------------------------:|:---------------------------|
+| **No Calib**   | Sea Surface Height $[m]$|        3.395 |         116.3  |  --- |  
+| ---   | Geos. current $[m.s^{-1}]$|        9.437 |         nan  |  --- |  
+| ---   | Relative vorticity $[]$|        0.760 |         37.9  |  --- | 
+| **Baseline**   | Sea Surface Height $[m]$|        0.145 |         83.9  |  [demo_generate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/demo_generate_baseline.ipynb) |  
+| ---   | Geos. current $[m.s^{-1}]$|        0.288 |         84.9  |  [demo_generate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/demo_generate_baseline.ipynb) |  
+| ---   | Relative vorticity $[]$|        0.529 |         36.5  |  [demo_generate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/demo_generate_baseline.ipynb) | 
+| **CER-method**   | Sea Surface Height $[m]$|        0.074 |        **4.2**  |  [generate_CERmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_CERmethod_calibration.ipynb) |  
+| ---   | Geos. current $[m.s^{-1}]$|        0.219 |         78.4  |  [generate_CERmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_CERmethod_calibration.ipynb) |  
+| ---   | Relative vorticity $[]$|        0.261 |         103.4  |  [generate_CERmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_CERmethod_calibration.ipynb) | 
+| **Projmethod**   | Sea Surface Height $[m]$|        0.037 |        **4.2**  |  [generate_Projmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_Projmethod_calibration.ipynb) |  
+| ---   | Geos. current $[m.s^{-1}]$|        0.115 |      40.2 |  [generate_Projmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_Projmethod_calibration.ipynb) |  
+| ---   | Relative vorticity $[]$|        0.271 |        **30.6**  |  [generate_Projmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_Projmethod_calibration.ipynb) | 
+| **CalCNN**   | Sea Surface Height $[m]$|        **0.014** |         **4.2**  |  Offline generation |  
+| ---   | Geos. current $[m.s^{-1}]$|        **0.076** |         **30.6**  | Offline generation    |  
+| ---   | Relative vorticity $[]$|        **0.212** |         37.9  | Offline generation | 
+
+  
+
+with:
+
+ `µ(RMSE)`: averaged root-mean square error over the tracks crossing the swath, 
+ 
+ `λ(SNR1)`: spatial wavelength where SNR=0.5.
+ 
+
+### 4.3 Evaluation on Nadirs tracks: Leaderboard
+
+| Method   | Field                          |   µ(RMSE) |    λ(SNR1) [km] | Reference                  |
+|:---------|--------:|-----------------:|-------------------------------:|:---------------------------| 
+| **Ref (True SWOT)**  | Sea Surface Height $[m]$|     0.014  |    15.561  |  --- |  
+| **No Calib**   | Sea Surface Height $[m]$|    4.041   |    NaN  |  --- |  
+| **Baseline**   | Sea Surface Height $[m]$|        0.218 |   30.270 |  [demo_generate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/demo_generate_baseline.ipynb) |  
+| **CER-method**   | Sea Surface Height $[m]$|        0.074 |   **23.800**   |  [generate_CERmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_CERmethod_calibration.ipynb) |  
+| **Projmethod**   | Sea Surface Height $[m]$|        **0.037** |  25.647  |  [generate_Projmethod_calibration](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/generate_Projmethod_calibration.ipynb) |  
+| **CalCNN**   | Sea Surface Height $[m]$|        --- |        ---  |  Offline generation |  
+
+ 
+
+with:
+
+ `µ(RMSE)`: averaged root-mean square error over the swaths 
+ 
+ `λ(SNR1)`: spatial wavelength where SNR=0.5.
+
+ 
 ## Acknowledgement
 
 This data challenge was funded by the CNRS, by the CNES and by the Service Evolution CMEMS project: SLICING, in collaboration with Datlas, IGE, CLS, IMT-Atlantique.
