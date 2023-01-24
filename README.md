@@ -6,18 +6,18 @@ A challenge on the SWOT satellite error calibration organised by Datlas, IGE, IM
 
 ## Plan 
 
-1. [Context & Motivation](#contextmotivation)
-2. [The experiment](#theexperiment)
-- 2.1 Experimental setup
-- 2.2 Baseline
-- 2.3 Evaluations
-3. [To get started](#togetstarted) 
-- 3.1 Installation
-- 3.2 Download the data
-4. [To compare](#tocompare)
-- 4.1 Method descriptions
-- 4.2 Evaluation on SWOT swath: Leaderboard
-- 4.3 Evaluation on Nadirs tracks: Leaderboard
+[1. Context & Motivation](#contextmotivation)
+[2. The experiment](#theexperiment)
+    [2.1 Experimental setup](#sec21)
+    [2.2 Baseline](#sec23)
+    [2.3 Evaluations](#sec23)
+[3. To get started](#togetstarted) 
+    [3.1 Installation](#sec31)
+    [3.2 Download the data](#sec32)
+[4.To compare](#tocompare)
+    [4.1 Method descriptions](#sec41)
+    [4.2 Evaluation on SWOT swath: Leaderboard](#sec42)
+    [4.3 Evaluation on Nadirs tracks: Leaderboard](#sec43)
 Acknowledgement
 References
 
@@ -41,6 +41,7 @@ This data challenge is partly funded by the CNRS, by the CNES and, as part of th
 <a name="theexperiment"></a> 
 ## 2. The experiment
 
+<a name="sec21"></a>
 ### 2.1 Experimental setup
 
 The data challenge is in the form of an Observing System Simulation Experiment (OSSE) considering a realistic ocean model simulation, the NEMO high resolution North Atlantic simulation **NATL60**, as the true ocean state in a 10°X10° degree box in the Gulf Stream region. The SWOT simulator ([Gaultier et al., 2016](https://journals.ametsoc.org/view/journals/atot/33/1/jtech-d-15-0160_1.xml?tab_body=fulltext-display)) was then used to create realistic SWOT data with and without instrumental noise. 
@@ -55,12 +56,14 @@ In no way the targets that are available during the evaluation period should be 
 <center><em>Fig.: Example of one target of the data challenge: SWOT data without errors (left), one input of the data challenge: SWOT data with errors (center) and the difference between the two (right). Here, SWOT is "flying" over the NATL60 model simulation in the Gulf Stream region.
 </em></center>
 
+<a name="sec22"></a>
 ### 2.2 Baseline 
 
 The baseline method is a very simple and straightforward method that removes the averaged on the pass of a linear trend across track. This is supposed to remove all the signal that has the same structure as the roll error (if the roll error was constant over the region). This method is flowed since (1) there are other errors, (2) the roll error is not constant over the region and (3) the method also removes signals that happens to have a linear structure across track but is actual SSH. 
 The baseline is performed in the notebook [demo_generate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_generate_calibrations/demo_generate_baseline.ipynb).
 
 
+<a name="sec23"></a>
 ### 2.3 Evaluations
 
 There are two ways of evaluating the calibration performance. Since the experiment is an OSSE, we do have the true SSH on the SWOT swath. Hence the first possible evaluation is directly on the SWOT swath where the calibrated SWOT data are compared to the true SWOT data. The second evaluation is performed using OSE-type metrics, i.e. as if the true data on the swath wasn't available. In this case, the calibrated SWOT data are interpolated onto some Nadir tracks (envisat, geosat2, jason1 and topex-poseidon) and then compared to the true SWOT data (also interpolated on the Nadir tracks).  
@@ -83,6 +86,7 @@ The second evaluation of the calibration methods is based on the comparison of t
 <a name="togetstarted"></a>
 ## 3. To get started
 
+<a name="sec31"></a>
 ### 3.1 Installation
 :computer: _**How to get started ?**_
 
@@ -109,6 +113,7 @@ You're now good to go !
 [Check out the quickstart](quickstart.ipynb)
 
 
+<a name="sec32"></a>
 ### 3.2 Download the data
 
 The data are hosted on the opendap: [ocean-data-challenges/2022c_SWOT_error_calibration_GS/](https://ige-meom-opendap.univ-grenoble-alpes.fr/thredds/catalog/meomopendap/extract/ocean-data-challenges/2022c_SWOT_error_calibration_GS/catalog.html). 
@@ -160,6 +165,7 @@ and then uncompress the files using `tar -xvf <file>.tar.gz`. You may also use `
 ## 4. To compare 
 
 
+<a name="sec41"></a>
 ### 4.1 Method descriptions
 
 #### Baseline
@@ -196,7 +202,7 @@ Then a last convolution layer is used to compute a point wise correction of the 
 Finally this correction is added to the input interpolated field to produce the calibrated SWOT data.
 
 
-
+<a name="sec42"></a> 
 ### 4.2 Evaluation on SWOT swath: Leaderboard
 
 | Method   | Field                          |   µ(RMSE) |    λ(SNR1) [km] | Reference                  |
@@ -226,6 +232,7 @@ with:
  `λ(SNR1)`: spatial wavelength where SNR=0.5.
  
 
+<a name="sec43"></a>
 ### 4.3 Evaluation on Nadirs tracks: Leaderboard
 
 | Method   | Field                          |   µ(RMSE) |    λ(SNR1) [km] | Reference                  |
