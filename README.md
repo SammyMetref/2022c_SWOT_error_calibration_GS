@@ -222,7 +222,7 @@ An input convolution layer is used to change the number of channels. The data is
 Then a last convolution layer is used to compute a point wise correction of the L4 product from the different channels. 
 Finally this correction is added to the input interpolated field to produce the calibrated SWOT data.
 
-No notebook available. The method was generated offline. 
+No notebook available. The method was generated offline by IMT Atlantique (contact [Quentin Febvre](quentin.febvre@imt-atlantique.fr)). 
 
 <a name="sec42"></a> 
 ### 4.2 Evaluation on SWOT swath: Leaderboard
