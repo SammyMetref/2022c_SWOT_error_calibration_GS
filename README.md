@@ -264,7 +264,7 @@ with:
 | **Baseline**   | SSH $[m]$|        0.218 |   30.270 |  [demo_evaluation_onnadirs_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onnadirs_baseline.ipynb) |  
 | **CER-method**   | SSH $[m]$|        0.074 |   **23.800**   |  [evaluation_onnadirs_CERmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/evaluation_onnadirs_CERmethod.ipynb) |  
 | **Projmethod**   | SSH $[m]$|        **0.037** |  25.647  |  [evaluation_onnadirs_Projmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/evaluation_onnadirs_Projmethod.ipynb) |  
-| **CalCNN**   | Sea Surface Height $[m]$|        ? |        ?  |  ? |  
+| **CalCNN**   | SSH $[m]$|        ? |        ?  |  ? |  
 
  
 
