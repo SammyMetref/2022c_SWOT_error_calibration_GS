@@ -86,7 +86,7 @@ There are two ways of evaluating the calibration performance. Since the experime
 
 #### Evaluation on SWOT swath
 
-The first evaluation of the calibration methods is based on the comparison of the SWOT calibrated swaths with the error-free SWOT swaths. It includes two scores, one based on the Root-Mean-Square Error (RMSE), the other a noise-to-signal ratio based on an isotropic 2D Fourier wavenumber spectra. The evaluation notebook [demo_evaluate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/demo_evaluate_onswot_baseline.ipynb) implements the computation of these two scores for the baseline as they appear in the first leaderboard. 
+The first evaluation of the calibration methods is based on the comparison of the SWOT calibrated swaths with the error-free SWOT swaths. It includes two scores, one based on the Root-Mean-Square Error (RMSE), the other a noise-to-signal ratio based on an isotropic 2D Fourier wavenumber spectra. The evaluation notebook [demo_evaluate_onswot_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_swot/demo_evaluate_onswot_baseline.ipynb) implements the computation of these two scores for the baseline as they appear in the first leaderboard. 
 
 After running the evaluation notebook for a method, the files stat_'METHOD'.nc (RMSE data), psd_'METHOD'.nc (PSD and SNR data) and ldb_'METHOD'.nc (Leaderboard data) are saved in the chosen foler. 
 
@@ -95,7 +95,7 @@ A comparison notebook, [compare_evaluations_onswot](https://github.com/SammyMetr
 
 #### Evaluation on Nadirs tracks
 
-The second evaluation of the calibration methods is based on the comparison of the true SWOT data interpolated on Nadir tracks. It also includes two scores, one based on the Root-Mean-Square Error (RMSE), the other a noise-to-signal ratio based on a one-dimensional (along Nadir tracks crossing the swath) Fourier wavenumber spectra. The evaluation notebook [demo_evaluate_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluate_onnadirs_baseline.ipynb) implements the computation of these two scores for the baseline as they appear in the second leaderboard. 
+The second evaluation of the calibration methods is based on the comparison of the true SWOT data interpolated on Nadir tracks. It also includes two scores, one based on the Root-Mean-Square Error (RMSE), the other a noise-to-signal ratio based on a one-dimensional (along Nadir tracks crossing the swath) Fourier wavenumber spectra. The evaluation notebook [demo_evaluate_onnadirs_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluate_onnadirs_baseline.ipynb) implements the computation of these two scores for the baseline as they appear in the second leaderboard. 
 
 
 <a name="togetstarted"></a>
@@ -257,7 +257,7 @@ with:
 <a name="sec43"></a>
 ### 4.3 Evaluation on Nadirs tracks: Leaderboard
 
-| Method   | Field                          |   µ(RMSE) |    λ(SNR1) [km] | Reference                  |
+| Method   | Field                          |   RMSE |    λ(SNR1) [km] | Reference                  |
 |:---------|--------:|-----------------:|-------------------------------:|:---------------------------| 
 | **Ref (True SWOT)**  | SSH $[m]$|     0.014  |    15.561  |  [demo_evaluation_onnadirs_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onnadirs_baseline.ipynb) |  
 | **No Calib**   | SSH $[m]$|    4.041   |    NaN  |  [demo_evaluation_onnadirs_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onnadirs_baseline.ipynb)  |  
@@ -270,7 +270,7 @@ with:
 
 with:
 
- `µ(RMSE)`: averaged root-mean square error over the swaths 
+ `RMSE`: root-mean square error over the nadir tracks-SWOT swath crossings, 
  
  `λ(SNR1)`: spatial wavelength where SNR=0.5.
 
@@ -278,9 +278,10 @@ with:
 <a name="acknowledgement"></a>
 ## Acknowledgement
 
-This data challenge was funded by the CNRS, by the CNES and by the Service Evolution CMEMS project: SLICING, in collaboration with Datlas, IGE, CLS, IMT-Atlantique.
+This data challenge was funded by CNRS, by CNES and by the Service Evolution CMEMS project: SLICING. 
+The challenge was designed by Datlas in collaboration with IGE, CLS and IMT-Atlantique.
 
-The structure of this data challenge was to a large extent inspired by the [`ocean-data-challenges`](https://github.com/ocean-data-challenges) created for the BOOST-SWOT ANR project.
+The structure of this data challenge was to a large extent inspired by the [`ocean-data-challenges`](https://github.com/ocean-data-challenges) created for the BOOST-SWOT ANR project and the SLICING CMEMS project.
  
 
 
