@@ -83,7 +83,7 @@ The baseline is performed in the notebook [demo_generate_baseline](https://githu
 <a name="sec23"></a>
 ### 2.3 Evaluations
 
-There are two ways of evaluating the calibration performance. Since the experiment is an OSSE, we do have the true SSH on the SWOT swath. Hence the first possible evaluation is directly on the SWOT swath where the calibrated SWOT data are compared to the true SWOT data. The second evaluation is performed using OSE-type metrics, i.e. as if the true data on the swath wasn't available. In this case, the calibrated SWOT data are interpolated onto some Nadir tracks (envisat, geosat2, jason1 and topex-poseidon) and then compared to the true SWOT data (also interpolated on the Nadir tracks).  
+There are three ways of evaluating the calibration performance. Since the experiment is an OSSE, we do have the true SSH on the SWOT swath. Hence the first possible evaluation is directly on the SWOT swath where the calibrated SWOT data are compared to the true SWOT data. The second evaluation is performed using OSE-type metrics, i.e. as if the true data on the swath wasn't available. In this case, the calibrated SWOT data are interpolated onto some Nadir tracks (envisat, geosat2, jason1 and topex-poseidon) and then compared to the true SWOT data (also interpolated on the Nadir tracks). The third evaluation is the same as the second one but with an independant satellite (cryosat) that has never been used to help calibrate SWOT. 
 
 
 #### Evaluation on SWOT swath
@@ -102,6 +102,7 @@ The second evaluation of the calibration methods is based on the comparison of t
 
 #### Evaluation on an independant nadir
  
+This third evaluation is exactly the same as the previous one (Nadir tracks) but using an independant nadir track. Here, the cryosat altimeter data has been simulated on the NAtl60 reference simulation and should not have been used in any way to tune the SWOT calibration. 
 
 The evaluation notebook [demo_evaluation_onindepnadir_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onindepnadir_baseline.ipynb) implements the computation of these two scores for the baseline as they appear in the third leaderboard. 
 
@@ -168,11 +169,13 @@ and then uncompress the files using `tar -xvf <file>.tar.gz`. You may also use `
 
 #### Other potentially useful data (nadirs and maps)
 
-##### 5 nadirs data (for calibration if needed and evaluation on nadir tracks)
+##### 6 nadir data (5 for calibration, if needed, and 1 for evaluation)
 ```shell
 !wget https://ige-meom-opendap.univ-grenoble-alpes.fr/thredds/fileServer/meomopendap/extract/ocean-data-challenges/2022c_SWOT_error_calibration_GS/dc_SWOTcalibGS_nadirs.tar.gz
 
 ```
+
+NB: The file dc_SWOTcalibGS_cryosat.nc is to be used **only** for evaluation ! 
 
 ##### Maps data: OI maps made from the 5 nadirs data (for calibration if needed)
 ```shell
@@ -271,7 +274,7 @@ with:
 | **Ref (True SWOT)**  | SSH $[m]$|     0.013  |    15.561  |  [demo_evaluation_onnadirs_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onnadirs_baseline.ipynb) |  
 | **No Calib**   | SSH $[m]$|    4.041   |    NaN  |  [demo_evaluation_onnadirs_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onnadirs_baseline.ipynb)  |  
 | **Baseline**   | SSH $[m]$|        0.218 |   30.270 |  [demo_evaluation_onnadirs_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onnadirs_baseline.ipynb) |  
-| **CER-method**   | SSH $[m]$|        0.074 |   23.800**   |  [evaluation_onnadirs_CERmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/evaluation_onnadirs_CERmethod.ipynb) |  
+| **CER-method**   | SSH $[m]$|        0.074 |   23.800   |  [evaluation_onnadirs_CERmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/evaluation_onnadirs_CERmethod.ipynb) |  
 | **Projmethod**   | SSH $[m]$|        0.037 |  25.647  |  [evaluation_onnadirs_Projmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/evaluation_onnadirs_Projmethod.ipynb) |  
 | **CalCNN**   | SSH $[m]$|        **0.0134** |        **19.772** |  [evaluation_onnadirs_CalCNN](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/evaluation_onnadirs_CalCNN.ipynb) |  
 
