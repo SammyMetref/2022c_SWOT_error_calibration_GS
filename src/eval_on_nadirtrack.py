@@ -491,12 +491,20 @@ def compute_segment_alongtrack(time_alongtrack,
 def interp_swot2nadir(sats, dir_of_swottracks, swottracks_name='inputs', nremoval=6, ref_nadir='model'):
     
     if swottracks_name == 'inputs' :
-        readfile = os.path.isfile(dir_of_swottracks+'ref_onnadirtracks.nc')
-        pathfile = dir_of_swottracks+'ref_onnadirtracks.nc'
+        if np.shape(sats)[0]==1:
+            readfile = os.path.isfile(dir_of_swottracks+'ref_onindepnadir.nc')
+            pathfile = dir_of_swottracks+'ref_onindepnadir.nc'
+        else:
+            readfile = os.path.isfile(dir_of_swottracks+'ref_onnadirtracks.nc')
+            pathfile = dir_of_swottracks+'ref_onnadirtracks.nc'
     
     else :
-        readfile = os.path.isfile(dir_of_swottracks+'/calib_onnadirtracks.nc')
-        pathfile = dir_of_swottracks+'calib_onnadirtracks.nc'
+        if np.shape(sats)[0]==1:
+            readfile = os.path.isfile(dir_of_swottracks+'/calib_onindepnadir.nc')
+            pathfile = dir_of_swottracks+'calib_onindepnadir.nc' 
+        else:
+            readfile = os.path.isfile(dir_of_swottracks+'/calib_onnadirtracks.nc')
+            pathfile = dir_of_swottracks+'calib_onnadirtracks.nc'
         
     
     
@@ -534,13 +542,17 @@ def interp_swot2nadir(sats, dir_of_swottracks, swottracks_name='inputs', nremova
         x_ac = []
 
         list_of_swottracks = sorted(os.listdir(dir_of_swottracks))
+        first_iswot = None
 
         nstep = np.size(list_of_swottracks)
         istep = 0
         for iswot in list_of_swottracks:
-            if iswot[:2] != 'dc':
+            if not iswot.startswith('dc_'):
                 print('Warning: Some files in directory do not start by dc_*:'+iswot)
                 continue
+               
+            if first_iswot is None: first_iswot=iswot
+                
             ds_swot = xr.open_mfdataset(dir_of_swottracks+iswot)
             #print(iswot)
             progress_bar(istep,nstep-1)
@@ -554,7 +566,7 @@ def interp_swot2nadir(sats, dir_of_swottracks, swottracks_name='inputs', nremova
 
                 if ds_sat_cut.time.size != 0:  
 
-                    if list_of_swottracks[0] == iswot and sats[0]==isat:
+                    if first_iswot == iswot and sats[0]==isat:
                         time = np.array(ds_sat_cut.time)
                     else:
                         time = np.hstack((time,np.array(ds_sat_cut.time)))
@@ -640,7 +652,10 @@ def interp_swot2nadir(sats, dir_of_swottracks, swottracks_name='inputs', nremova
                  attrs=dict(description="Data challenge: https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS. \nCreated with interp_swot2nadir() in eval_on_nadirtrack.py."),
              )        
 
-            ds.to_netcdf(dir_of_swottracks+'/ref_onnadirtracks.nc')
+            if np.shape(sats)[0]==1:
+                ds.to_netcdf(dir_of_swottracks+'/ref_onindepnadir.nc')
+            else:
+                ds.to_netcdf(dir_of_swottracks+'/ref_onnadirtracks.nc')
 
             return lon, lat, time, ref_rm, x_ac, eq_true_rm, eq_err_rm
         else: 
@@ -660,7 +675,10 @@ def interp_swot2nadir(sats, dir_of_swottracks, swottracks_name='inputs', nremova
                  attrs=dict(description="Data challenge: https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS. \nCreated with interp_swot2nadir() in eval_on_nadirtrack.py."),
              )        
 
-            ds.to_netcdf(dir_of_swottracks+'/calib_onnadirtracks.nc')
+            if np.shape(sats)[0]==1:
+                ds.to_netcdf(dir_of_swottracks+'/calib_onindepnadir.nc')
+            else:
+                ds.to_netcdf(dir_of_swottracks+'/calib_onnadirtracks.nc')
 
             return lon, lat, time, ref_rm, x_ac, eq_calib_rm
     

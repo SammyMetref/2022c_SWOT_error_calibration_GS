@@ -29,6 +29,8 @@ A challenge on the SWOT satellite error calibration organised by Datlas, IGE, IM
 &ensp; [4.2 Evaluation on SWOT swath: Leaderboard](#sec42)
     
 &ensp; [4.3 Evaluation on Nadirs tracks: Leaderboard](#sec43)
+
+&ensp; [4.3 Evaluation on an independant nadir: Leaderboard](#sec44)
      
 [**Acknowledgement**](#acknowledgement)
 
@@ -96,6 +98,13 @@ A comparison notebook, [compare_evaluations_onswot](https://github.com/SammyMetr
 #### Evaluation on Nadirs tracks
 
 The second evaluation of the calibration methods is based on the comparison of the true SWOT data interpolated on Nadir tracks. It also includes two scores, one based on the Root-Mean-Square Error (RMSE), the other a noise-to-signal ratio based on a one-dimensional (along Nadir tracks crossing the swath) Fourier wavenumber spectra. The evaluation notebook [demo_evaluate_onnadirs_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluate_onnadirs_baseline.ipynb) implements the computation of these two scores for the baseline as they appear in the second leaderboard. 
+
+
+#### Evaluation on an independant nadir
+ 
+
+The evaluation notebook [demo_evaluation_onindepnadir_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onindepnadir_baseline.ipynb) implements the computation of these two scores for the baseline as they appear in the third leaderboard. 
+
 
 
 <a name="togetstarted"></a>
@@ -259,12 +268,34 @@ with:
 
 | Method   | Field                          |   RMSE |    λ(SNR1) [km] | Reference                  |
 |:---------|--------:|-----------------:|-------------------------------:|:---------------------------| 
-| **Ref (True SWOT)**  | SSH $[m]$|     0.014  |    15.561  |  [demo_evaluation_onnadirs_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onnadirs_baseline.ipynb) |  
+| **Ref (True SWOT)**  | SSH $[m]$|     0.013  |    15.561  |  [demo_evaluation_onnadirs_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onnadirs_baseline.ipynb) |  
 | **No Calib**   | SSH $[m]$|    4.041   |    NaN  |  [demo_evaluation_onnadirs_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onnadirs_baseline.ipynb)  |  
 | **Baseline**   | SSH $[m]$|        0.218 |   30.270 |  [demo_evaluation_onnadirs_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onnadirs_baseline.ipynb) |  
-| **CER-method**   | SSH $[m]$|        0.074 |   **23.800**   |  [evaluation_onnadirs_CERmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/evaluation_onnadirs_CERmethod.ipynb) |  
-| **Projmethod**   | SSH $[m]$|        **0.037** |  25.647  |  [evaluation_onnadirs_Projmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/evaluation_onnadirs_Projmethod.ipynb) |  
-| **CalCNN**   | SSH $[m]$|        ? |        ?  |  ? |  
+| **CER-method**   | SSH $[m]$|        0.074 |   23.800**   |  [evaluation_onnadirs_CERmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/evaluation_onnadirs_CERmethod.ipynb) |  
+| **Projmethod**   | SSH $[m]$|        0.037 |  25.647  |  [evaluation_onnadirs_Projmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/evaluation_onnadirs_Projmethod.ipynb) |  
+| **CalCNN**   | SSH $[m]$|        **0.0134** |        **19.772** |  [evaluation_onnadirs_CalCNN](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/evaluation_onnadirs_CalCNN.ipynb) |  
+
+ 
+
+with:
+
+ `RMSE`: root-mean square error over the nadir tracks-SWOT swath crossings, 
+ 
+ `λ(SNR1)`: spatial wavelength where SNR=0.5.
+ 
+ 
+
+<a name="sec44"></a>
+### 4.3 Evaluation on an independant Nadir: Leaderboard
+
+| Method   | Field                          |   RMSE |    λ(SNR1) [km] | Reference                  |
+|:---------|--------:|-----------------:|-------------------------------:|:---------------------------| 
+| **Ref (True SWOT)**  | SSH $[m]$|     0.016  |    22.616  |  [demo_evaluation_onindepnadir_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onindepnadir_baseline.ipynb) |  
+| **No Calib**   | SSH $[m]$|    4.078   |    NaN  |  [demo_evaluation_onindepnadir_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onindepnadir_baseline.ipynb)  |  
+| **Baseline**   | SSH $[m]$|        0.171 |   38.132 |  [demo_evaluation_onindepnadir_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onindepnadir_baseline.ipynb) |  
+| **CER-method**   | SSH $[m]$|        0.076 |   **18.656**   |  [evaluation_onnadirs_CERmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/evaluation_onnadirs_CERmethod.ipynb) |  
+| **Projmethod**   | SSH $[m]$|        0.033 |  **22.312**  |  [evaluation_onnadirs_Projmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/evaluation_onnadirs_Projmethod.ipynb) |  
+| **CalCNN**   | SSH $[m]$|        ? |        ? |  ?|  
 
  
 
