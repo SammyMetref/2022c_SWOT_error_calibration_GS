@@ -293,11 +293,11 @@ with:
 
 | Method   | Field                          |   RMSE |    λ(SNR1) [km] | Reference                  |
 |:---------|--------:|-----------------:|-------------------------------:|:---------------------------| 
-| **Ref (True SWOT)**  | SSH $[m]$|     0.016  |    22.616  |  [demo_evaluation_onindepnadir_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onindepnadir_baseline.ipynb) |  
-| **No Calib**   | SSH $[m]$|    4.078   |    NaN  |  [demo_evaluation_onindepnadir_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onindepnadir_baseline.ipynb)  |  
-| **Baseline**   | SSH $[m]$|        0.171 |   38.132 |  [demo_evaluation_onindepnadir_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/demo_evaluation_onindepnadir_baseline.ipynb) |  
-| **CER-method**   | SSH $[m]$|        0.076 |   **18.656**   |  [evaluation_onnadirs_CERmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/evaluation_onnadirs_CERmethod.ipynb) |  
-| **Projmethod**   | SSH $[m]$|        0.033 |  **22.312**  |  [evaluation_onnadirs_Projmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_nadirs/evaluation_onnadirs_Projmethod.ipynb) |  
+| **Ref (True SWOT)**  | SSH $[m]$|     0.016  |    22.616  |  [demo_evaluation_onindepnadir_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_independant-nadir/demo_evaluation_onindepnadir_baseline.ipynb) |  
+| **No Calib**   | SSH $[m]$|    4.078   |    NaN  |  [demo_evaluation_onindepnadir_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_independant-nadir/demo_evaluation_onindepnadir_baseline.ipynb)  |  
+| **Baseline**   | SSH $[m]$|        0.171 |   38.132 |  [demo_evaluation_onindepnadir_baseline](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_independant-nadir/demo_evaluation_onindepnadir_baseline.ipynb) |  
+| **CER-method**   | SSH $[m]$|        0.076 |   **18.656**   |  [evaluation_onnadirs_CERmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_independant-nadir/evaluation_onindepnadir_CERmethod.ipynb) |  
+| **Projmethod**   | SSH $[m]$|        0.033 |  **22.312**  |  [evaluation_onnadirs_Projmethod](https://github.com/SammyMetref/2022c_SWOT_error_calibration_GS/blob/main/notebooks_evaluate_on_independant-nadir/evaluation_onindepnadir_Projmethod.ipynb) |  
 | **CalCNN**   | SSH $[m]$|        ? |        ? |  ?|  
 
  
